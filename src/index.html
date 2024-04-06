@@ -1,9 +1,11 @@
-
+<!DOCTYPE html>
+<html lang="ru">
 
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
 	<script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+	<script src="https://d3js.org/d3.v7.min.js"></script>
 
 	<style>
 		body,
@@ -20,13 +22,29 @@
 	</style>
 </head>
 
+
 <body>
+
 	<div id="map"></div>
 	<script>
+
+
+		// var svg = d3.select(map.getPanes().overlayPane).append("svg");
+		// var g = svg.append("g").attr("class", "leaflet-zoom-hide");
+
+		// var customSvg = '<g transform="translate(-10,-10) scale(0.2)" stroke="black" stroke-width="1" fill="none"><path d="M100 0 L100 100 L0 100"/><circle cx="50" cy="50" r="50"/></g>';
+
+		// var customLayer = L.svgOverlay(function (selection, projections) {
+		// 	var svg = d3.select(selection).select("g");
+		// 	svg.html(customSvg);
+		// }).addTo(map);
+
 		var map = L.map('map').setView([51.505, -0.09], 13);
 
 
+
 		L.imageOverlay('photo_2024-04-04_16-54-01.jpg', [[0, 0], [100, 400]]).addTo(map);
+		map.fitBounds([[0, 0], [100, 400]]);
 
 
 
@@ -52,9 +70,7 @@
 			polygonArray.push(polygon);
 		});
 
-
-
-		map.fitBounds([[0, 0], [100, 400]]);
+		L.svg().addTo(map);
 
 
 
@@ -78,15 +94,10 @@
 			});
 		}
 
-		changePolygonColor(20, 0, 21, 50);
+		changePolygonColor();
 
 		setInterval(changePolygonColor, 60000);
 	</script>
 </body>
 
 </html>
-
-
-
-
-
