@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
-	<title>Как сделать интерактивную схему на SVG + jQuery - Snipp.ru</title>
-	<link rel="stylesheet" href="styles.css">
-</head>
+    <title>Как сделать интерактивную схему на SVG + jQuery - Snipp.ru</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .scheme {
+            max-width: 100%;
+            height: auto;
+        }
+        svg {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 <body>
 	<div class="scheme">
 		<svg viewBox="0 0 1706.6667 853.33331">
@@ -148,5 +157,13 @@
 			integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
 			crossorigin="anonymous"></script>
 	<script src="index.js"></script>
+	<script>
+		$(document).ready(function () {
+			$('.auditorium').click(function () {
+				var description = $(this).find('path').attr('description-date');
+				alert(description);
+			});
+		});
+	</script>
 </body>
 </html>
