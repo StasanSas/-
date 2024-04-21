@@ -13,35 +13,17 @@ $('.auditorium-polygon').click(
     }
 )
 
-function getDataFromDatabase(fileName, day, number) {
-    return new Promise((resolve, reject) => {
-        if (number === -1) {
-            resolve([]);
-        } else {
-            $.ajax({
-                url: fileName,
-                dataType: 'text',
-                success: function(data) {
-                    const lines = data.split('\n');
-                    const result = [];
-                    lines.forEach((line, index) => {
-                        const rowInfo = line.split(' ');
-                        const weekday = rowInfo[1];
-                        const period = Number(rowInfo[2]);
-
-                        if (day === weekday && number === period) {
-                            result.push(rowInfo[3]);
-                        }
-                    });
-                    resolve(result);
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching data from database:', error);
-                    reject(error);
-                }
-            });
-        }
-    });
+function getDataFromDatabase(floor) {
+    return fetch("http://127.0.0.1:5000")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
 }
 
 function ConvertToWeekday(day) {
@@ -97,17 +79,24 @@ function ConvertToPeriod(currentHour, currentMinute) {
     return -1;
 }
 
+function convertJsonToArray(jsonArray) {
+    return jsonArray.map(item => item.number);
+}
+
 function checkAndColorAuditoriums() {
     const date = new Date();
     const day = ConvertToWeekday(date.getDay());
     const number = ConvertToPeriod(date.getHours(), date.getMinutes())
 
-    getDataFromDatabase('database.txt', day, number)
+    getDataFromDatabase(6)
         .then(busyAuditoriums => {
+            const auditoriumNumbers = convertJsonToArray(busyAuditoriums);
+            console.log(auditoriumNumbers);
+
             $(".auditorium").each(function() {
                 const auditoriumId = $(this).attr("id");
 
-                if (busyAuditoriums.includes(auditoriumId)) {
+                if (auditoriumNumbers.includes(auditoriumId)) {
                     $(this).find(".auditorium-polygon").attr("fill", "red");
                 } else {
                     $(this).find(".auditorium-polygon").attr("fill", "green");
