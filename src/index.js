@@ -113,3 +113,19 @@ checkAndColorAuditoriums();
 $(document).ready(function() {
     setInterval(checkAndColorAuditoriums, 60000);
 });
+
+
+
+
+
+
+$(document).ready(function () {
+    $('.auditorium').click(function () {
+        const text = $(this).find('.auditorium-polygon').attr('description-date');
+        const objectDescription = $(".description");
+        objectDescription.html(text);
+        //objectDescription.css('left', `${(100 * arguments.x / originalWidth)  - 2}%`);
+        //objectDescription.css('top', `${(480 * arguments.y / originalHeight)  - 60}%`);
+    });
+});
+
