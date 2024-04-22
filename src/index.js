@@ -1,3 +1,6 @@
+
+
+
 $('.auditorium-polygon').hover(
     function (){
         $('.desc').html($(this).attr("description-date"));
@@ -110,12 +113,71 @@ function checkAndColorAuditoriums() {
 
 checkAndColorAuditoriums();
 
+
+class CustomDate extends Date {
+    constructor(currentTime) {
+        super();
+        this.currentTime = currentTime;
+        this.nextCustomDate = undefined;
+        this.dateLast = false;
+    }
+
+    initNextCustomDate(nextCustomDate){
+        this.nextCustomDate = nextCustomDate;
+    }
+
+    getIsNeedDoApdate() {
+        let currentTime = new Date();
+        currentTime.setFullYear(0);
+        currentTime.setMonth(0);
+        currentTime.setDate(0);
+        if (this.dateLast){
+            let day = new Date(0, 0, 1, 0, 0, 0, 0)
+            let zero = new Date(0, 0, 0, 0, 0, 0, 0);
+
+            return !( this.currentTime < currentTime < day || zero <= currentTime < this.nextCustomDate.currentTime);
+        }
+        return !(this.currentTime <= currentTime < this.nextCustomDate.currentTime);
+    }
+}
+
+const checkPointDataList = [
+    new Date().setHours(9, 0, 0, 0),
+    new Date().setHours(10, 30, 0, 0),
+    new Date().setHours(10, 40, 0, 0),
+]
+
+let lastDateObj = null;
+let firstDateObj = null;
+for (let i= 0; i < checkPointDataList.length; i++){
+    let newCustomDate = new CustomDate(checkPointDataList[i])
+
+    if (lastDateObj !== null){
+        lastDateObj.initNextCustomDate(newCustomDate)
+    } else{
+        firstDateObj = newCustomDate;
+    }
+    lastDateObj = newCustomDate;
+}
+lastDateObj.dateLast = true;
+lastDateObj.nextCustomDate = firstDateObj;
+
+let currentDataObj = firstDateObj;
+
+while (currentDataObj.getIsNeedDoApdate() !== false)
+    currentDataObj = currentDataObj.nextCustomDate;
+
 $(document).ready(function() {
-    setInterval(checkAndColorAuditoriums, 60000);
+    setInterval(updateColor, 2);
 });
 
+function updateColor() {
+    if (currentDataObj.getIsNeedDoApdate()){
+        checkAndColorAuditoriums();
+        currentDataObj = currentDataObj.nextCustomDate;
+    }
 
-
+}
 
 
 
@@ -124,8 +186,6 @@ $(document).ready(function () {
         const text = $(this).find('.auditorium-polygon').attr('description-date');
         const objectDescription = $(".description");
         objectDescription.html(text);
-        //objectDescription.css('left', `${(100 * arguments.x / originalWidth)  - 2}%`);
-        //objectDescription.css('top', `${(480 * arguments.y / originalHeight)  - 60}%`);
     });
 });
 

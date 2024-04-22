@@ -4,6 +4,7 @@ body{
 }
 
 .scheme{
+
     position: absolute;
     top: 10%;
     left: 2.5%;
@@ -22,8 +23,10 @@ svg{
 }
 
 .description{
-    margin-left: 25%;
+    position: absolute;
+    left: 25%;
+    top: 60%;
     width: 50%;
-    height: 100%;
+    height: auto;
     border: 1px solid rgb(0,0,0);
 }
