@@ -30,3 +30,69 @@ svg{
     height: auto;
     border: 1px solid rgb(0,0,0);
 }
+
+.auditorium {
+    cursor: pointer;
+    transition: fill 0.8s, stroke 0.5s;
+}
+
+.auditorium:hover {
+    fill: rgba(0, 128, 0, 0.5);
+    stroke: white;
+}
+
+.header {
+    height: 100px;
+    background-color: #b2aeae;
+}
+
+.scheme {
+    top: 175px;
+}
+
+.label-weekday {
+    margin: 25px auto auto 50px;
+    position: absolute;
+    font-family: Georgia, serif;
+    font-weight: bold;
+}
+
+.select-weekday {
+    margin: 45px auto auto 50px;
+    width: 250px;
+    height: 30px;
+}
+
+.label-pairNumber {
+    margin: 25px auto auto 75px;
+    position: absolute;
+    font-family: Georgia, serif;
+    font-weight: bold;
+}
+
+.select-pairNumber {
+    margin: 45px auto auto 75px;
+    width: 250px;
+    height: 30px;
+}
+
+.label-floor {
+    margin: 25px auto auto 100px;
+    position: absolute;
+    font-family: Georgia, serif;
+    font-weight: bold;
+}
+
+.select-floor {
+    margin: 45px auto auto 100px;
+    width: 100px;
+    height: 30px;
+}
+
+.admit {
+    margin: 0 auto auto 103px;
+    width: 100px;
+    height: 30px;
+    cursor: pointer;
+    background-color: lightgreen;
+}

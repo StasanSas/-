@@ -1,12 +1,9 @@
-
-
-
 $('.auditorium-polygon').hover(
     function (){
         $('.desc').html($(this).attr("description-date"));
     },
-     function() {
-         $('.desc').html("Ящеры");
+    function() {
+        $('.desc').html("Ящеры");
     }
 )
 
@@ -16,13 +13,19 @@ $('.auditorium-polygon').click(
     }
 )
 
-function getDataFromDatabase(floor) {
-    return fetch("http://127.0.0.1:5000")
+function getDataFromDatabase(date, pairNumber) {
+    const url = `http://localhost:8090/date/${date}/pair/${pairNumber}`;
+
+    return fetch(url)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
             return response.json();
+        })
+        .then(data => {
+            console.log('Received data:', data);
+            return data;
         })
         .catch(error => {
             console.error('There was a problem with the fetch operation:', error);
@@ -82,24 +85,23 @@ function ConvertToPeriod(currentHour, currentMinute) {
     return -1;
 }
 
-function convertJsonToArray(jsonArray) {
-    return jsonArray.map(item => item.number);
-}
-
-function checkAndColorAuditoriums() {
+function checkAndColorAuditoriums(dateX="2024-04-25", pairNumber=1) {
     const date = new Date();
     const day = ConvertToWeekday(date.getDay());
     const number = ConvertToPeriod(date.getHours(), date.getMinutes())
 
-    getDataFromDatabase(6)
-        .then(busyAuditoriums => {
-            const auditoriumNumbers = convertJsonToArray(busyAuditoriums);
-            console.log(auditoriumNumbers);
+    getDataFromDatabase(dateX, pairNumber)
+        .then(jsonInfo => {
+            const busyAuditoriums = [];
+
+            for (let info of jsonInfo) {
+                busyAuditoriums.push(info["auditory"]);
+            }
 
             $(".auditorium").each(function() {
                 const auditoriumId = $(this).attr("id");
 
-                if (auditoriumNumbers.includes(auditoriumId)) {
+                if (busyAuditoriums.includes(auditoriumId)) {
                     $(this).find(".auditorium-polygon").attr("fill", "red");
                 } else {
                     $(this).find(".auditorium-polygon").attr("fill", "green");
@@ -113,73 +115,9 @@ function checkAndColorAuditoriums() {
 
 checkAndColorAuditoriums();
 
-
-class CustomDate extends Date {
-    constructor(currentTime) {
-        super();
-        this.currentTime = currentTime;
-        this.nextCustomDate = undefined;
-        this.dateLast = false;
-    }
-
-    initNextCustomDate(nextCustomDate){
-        this.nextCustomDate = nextCustomDate;
-    }
-
-    getIsNeedDoApdate() {
-        let currentTime = new Date();
-        currentTime.setFullYear(0);
-        currentTime.setMonth(0);
-        currentTime.setDate(0);
-        if (this.dateLast){
-            let day = new Date(0, 0, 1, 0, 0, 0, 0)
-            let zero = new Date(0, 0, 0, 0, 0, 0, 0);
-
-            return !( this.currentTime < currentTime < day || zero <= currentTime < this.nextCustomDate.currentTime);
-        }
-        return !(this.currentTime <= currentTime < this.nextCustomDate.currentTime);
-    }
-}
-
-const checkPointDataList = [
-    new Date().setHours(9, 0, 0, 0),
-    new Date().setHours(10, 30, 0, 0),
-    new Date().setHours(10, 40, 0, 0),
-]
-
-let lastDateObj = null;
-let firstDateObj = null;
-for (let i= 0; i < checkPointDataList.length; i++){
-    let newCustomDate = new CustomDate(checkPointDataList[i])
-
-    if (lastDateObj !== null){
-        lastDateObj.initNextCustomDate(newCustomDate)
-    } else{
-        firstDateObj = newCustomDate;
-    }
-    lastDateObj = newCustomDate;
-}
-lastDateObj.dateLast = true;
-lastDateObj.nextCustomDate = firstDateObj;
-
-let currentDataObj = firstDateObj;
-
-while (currentDataObj.getIsNeedDoApdate() !== false)
-    currentDataObj = currentDataObj.nextCustomDate;
-
 $(document).ready(function() {
-    setInterval(updateColor, 2);
+    window.timerId = setInterval(checkAndColorAuditoriums, 60000);
 });
-
-function updateColor() {
-    if (currentDataObj.getIsNeedDoApdate()){
-        checkAndColorAuditoriums();
-        currentDataObj = currentDataObj.nextCustomDate;
-    }
-
-}
-
-
 
 $(document).ready(function () {
     $('.auditorium').click(function () {
@@ -189,3 +127,15 @@ $(document).ready(function () {
     });
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    const admitButton = document.querySelector('.admit');
+
+    admitButton.addEventListener('click', function() {
+        const selectedWeekday = document.querySelector('.select-weekday').value;
+        const selectedPairNumber = document.querySelector('.select-pairNumber').value;
+        const selectedFloor = document.querySelector('.select-floor').value;
+
+        clearInterval(window.timerId);
+        checkAndColorAuditoriums("2024-04-25", 6);
+    });
+});
