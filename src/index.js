@@ -98,7 +98,7 @@ function checkAndColorAuditoriums(dateX="2024-04-25", pairNumber=1) {
                 busyAuditoriums.push(info["auditory"]);
             }
 
-            $(".auditorium").each(function() {
+            $(".auditorium").forEach(function() {
                 const auditoriumId = $(this).attr("id");
 
                 if (busyAuditoriums.includes(auditoriumId)) {
@@ -138,4 +138,18 @@ document.addEventListener('DOMContentLoaded', function() {
         clearInterval(window.timerId);
         checkAndColorAuditoriums("2024-04-25", 6);
     });
+});
+
+document.getElementById("floor").addEventListener("change", function() {
+    const selectedMap = this.value;
+    const elementsMap = document.querySelectorAll(".scheme");
+
+    for (let elementMap of elementsMap) {
+        elementMap.style.display = 'none';
+        elementMap.style.position = "absolute";
+        if (selectedMap === elementMap.id){
+            elementMap.style.display = 'block';
+            elementMap.style.position = "absolute";
+        }
+    }
 });
