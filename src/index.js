@@ -14,7 +14,7 @@ $('.auditorium-polygon').click(
 )
 
 function getDataFromDatabase(date, pairNumber) {
-    const url = `http://localhost:8090/date/${date}/pair/${pairNumber}`;
+    const url = `http://localhost:8091/date/${date}/pair/${pairNumber}`;
 
     return fetch(url)
         .then(response => {
@@ -85,7 +85,7 @@ function ConvertToPeriod(currentHour, currentMinute) {
     return -1;
 }
 
-function checkAndColorAuditoriums(dateX="2024-04-25", pairNumber=1) {
+function checkAndColorAuditoriums(dateX="2024-04-26", pairNumber=1) {
     const date = new Date();
     const day = ConvertToWeekday(date.getDay());
     const number = ConvertToPeriod(date.getHours(), date.getMinutes())
@@ -98,7 +98,7 @@ function checkAndColorAuditoriums(dateX="2024-04-25", pairNumber=1) {
                 busyAuditoriums.push(info["auditory"]);
             }
 
-            $(".auditorium").forEach(function() {
+            $(".auditorium").each(function() {
                 const auditoriumId = $(this).attr("id");
 
                 if (busyAuditoriums.includes(auditoriumId)) {
