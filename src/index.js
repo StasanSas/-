@@ -1,14 +1,14 @@
 $('.auditorium-polygon').hover(
-    function (){
+    function () {
         $('.desc').html($(this).attr("description-date"));
     },
-    function() {
+    function () {
         $('.desc').html("Ящеры");
     }
 )
 
 $('.auditorium-polygon').click(
-    function (){
+    function () {
         $('.desc').html("Текст");
     }
 )
@@ -33,7 +33,7 @@ function getDataFromDatabase(date, pairNumber) {
 }
 
 function ConvertToWeekday(day) {
-    switch(day) {
+    switch (day) {
         case 0:
             return 'ВС';
         case 1:
@@ -85,7 +85,7 @@ function ConvertToPeriod(currentHour, currentMinute) {
     return -1;
 }
 
-function checkAndColorAuditoriums(dateX="2024-04-26", pairNumber=1) {
+function checkAndColorAuditoriums(dateX = "2024-04-26", pairNumber = 1) {
     const date = new Date();
     const day = ConvertToWeekday(date.getDay());
     const number = ConvertToPeriod(date.getHours(), date.getMinutes())
@@ -98,7 +98,7 @@ function checkAndColorAuditoriums(dateX="2024-04-26", pairNumber=1) {
                 busyAuditoriums.push(info["auditory"]);
             }
 
-            $(".auditorium").each(function() {
+            $(".auditorium").each(function () {
                 const auditoriumId = $(this).attr("id");
 
                 if (busyAuditoriums.includes(auditoriumId)) {
@@ -115,22 +115,46 @@ function checkAndColorAuditoriums(dateX="2024-04-26", pairNumber=1) {
 
 checkAndColorAuditoriums();
 
-$(document).ready(function() {
+$(document).ready(function () {
     window.timerId = setInterval(checkAndColorAuditoriums, 60000);
 });
 
 $(document).ready(function () {
     $('.auditorium').click(function () {
         const text = $(this).find('.auditorium-polygon').attr('description-date');
-        const objectDescription = $(".description");
-        objectDescription.html(text);
+        const message = document.createElement("div");
+        message.classList.add('my-class');
+        message.textContent = text;
+        message.style.position = "absolute";
+        message.style.top = `${(this).getBoundingClientRect().top - 50}px`;
+        message.style.left = `${(this).getBoundingClientRect().left}px`;
+        message.style.background = "rgba(0, 0, 0, 0.5)";
+        message.style.color = "white";
+        message.style.padding = "10px";
+        message.style.zIndex = "1000";
+
+        const element = document.querySelector('.my-class');
+        if (element !== undefined && element !== null){
+            element.remove();
+        }
+        document.body.appendChild(message);
     });
+    
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+$(document).click(function(event) {
+    if (!$(event.target).closest('.auditorium').length) {
+        const element = document.querySelector('.my-class');
+        if (element !== undefined && element !== null){
+            element.remove();
+        }
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
     const admitButton = document.querySelector('.admit');
 
-    admitButton.addEventListener('click', function() {
+    admitButton.addEventListener('click', function () {
         const selectedWeekday = document.querySelector('.select-weekday').value;
         const selectedPairNumber = document.querySelector('.select-pairNumber').value;
         const selectedFloor = document.querySelector('.select-floor').value;
@@ -140,16 +164,19 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-document.getElementById("floor").addEventListener("change", function() {
+document.getElementById("floor").addEventListener("change", function () {
     const selectedMap = this.value;
     const elementsMap = document.querySelectorAll(".scheme");
 
     for (let elementMap of elementsMap) {
         elementMap.style.display = 'none';
         elementMap.style.position = "absolute";
-        if (selectedMap === elementMap.id){
+        if (selectedMap === elementMap.id) {
             elementMap.style.display = 'block';
             elementMap.style.position = "absolute";
         }
     }
 });
+
+
+
