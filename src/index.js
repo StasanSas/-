@@ -89,6 +89,7 @@ function checkAndColorAuditoriums(dateX = "2024-04-26", pairNumber = 1) {
     const date = new Date();
     const day = ConvertToWeekday(date.getDay());
     const number = ConvertToPeriod(date.getHours(), date.getMinutes())
+    
 
     getDataFromDatabase(dateX, pairNumber)
         .then(jsonInfo => {
@@ -132,6 +133,7 @@ $(document).ready(function () {
         message.style.color = "white";
         message.style.padding = "10px";
         message.style.zIndex = "1000";
+        message.style.borderRadius = "10px";
 
         const element = document.querySelector('.my-class');
         if (element !== undefined && element !== null){
@@ -160,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const selectedFloor = document.querySelector('.select-floor').value;
 
         clearInterval(window.timerId);
-        checkAndColorAuditoriums("2024-04-25", 6);
+        checkAndColorAuditoriums("2024-04-26", 1);
     });
 });
 
@@ -180,3 +182,23 @@ document.getElementById("floor").addEventListener("change", function () {
 
 
 
+// Получаем текущую дату
+let currentDate = new Date();
+
+// Получаем день недели текущей даты (0 - воскресенье, 1 - понедельник, ..., 6 - суббота)
+let currentDay = currentDate.getDay();
+
+// Вычисляем дату понедельника текущей недели
+let mondayDate = new Date(currentDate);
+mondayDate.setDate(currentDate.getDate() - currentDay + (currentDay === 0 ? -6 : 1));
+
+// Добавляем даты к каждому дню недели
+let select = document.getElementById('weekday');
+let options = select.getElementsByTagName('option');
+for (let i = 0; i < options.length; i++) {
+  let option = options[i];
+  let date = new Date(mondayDate);
+  date.setDate(mondayDate.getDate() + i);
+  let formattedDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+  option.textContent += ' (' + formattedDate + ')';
+}
