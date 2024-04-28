@@ -1,17 +1,3 @@
-$('.auditorium-polygon').hover(
-    function () {
-        $('.desc').html($(this).attr("description-date"));
-    },
-    function () {
-        $('.desc').html("Ящеры");
-    }
-)
-
-$('.auditorium-polygon').click(
-    function () {
-        $('.desc').html("Текст");
-    }
-)
 
 function getDataFromDatabase(date, pairNumber) {
     const url = `http://localhost:8091/date/${date}/pair/${pairNumber}`;
@@ -85,7 +71,7 @@ function ConvertToPeriod(currentHour, currentMinute) {
     return -1;
 }
 
-function checkAndColorAuditoriums(dateX = "2024-04-26", pairNumber = 1) {
+function checkAndColorAuditoriums(dateX, pairNumber) {
     const date = new Date();
     const day = ConvertToWeekday(date.getDay());
     const number = ConvertToPeriod(date.getHours(), date.getMinutes())
@@ -112,9 +98,24 @@ function checkAndColorAuditoriums(dateX = "2024-04-26", pairNumber = 1) {
         .catch(error => {
             console.error('Error while getting data from the database:', error);
         });
+
+    
 }
 
-checkAndColorAuditoriums();
+const date = new Date();
+const day = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+const number = ConvertToPeriod(date.getHours(), date.getMinutes())
+checkAndColorAuditoriums(day, number);
+
+const weekdaySelect = document.getElementById('weekday');
+const pairNumberSelect = document.getElementById('pairNumber');
+
+// Устанавливаем значение в селект день недели
+weekdaySelect.value = day;
+
+// Устанавливаем значение в селект номер пары
+pairNumberSelect.value = number;
+
 
 $(document).ready(function () {
     window.timerId = setInterval(checkAndColorAuditoriums, 60000);
@@ -129,7 +130,7 @@ $(document).ready(function () {
         message.style.position = "absolute";
         message.style.top = `${(this).getBoundingClientRect().top - 50}px`;
         message.style.left = `${(this).getBoundingClientRect().left}px`;
-        message.style.background = "rgba(0, 0, 0, 0.5)";
+        message.style.background = "rgba(0, 0, 0, 0.8)";
         message.style.color = "white";
         message.style.padding = "10px";
         message.style.zIndex = "1000";
@@ -163,6 +164,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         clearInterval(window.timerId);
         checkAndColorAuditoriums(selectedWeekday, selectedPairNumber);
+
     });
 });
 
@@ -201,4 +203,5 @@ for (let i = 0; i < options.length; i++) {
   date.setDate(mondayDate.getDate() + i);
   let formattedDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
   option.textContent += ' (' + formattedDate + ')';
+  option.value = formattedDate
 }
