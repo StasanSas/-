@@ -67,8 +67,8 @@ function ConvertToPeriod(currentHour, currentMinute) {
     if ((currentHour === 19) || (currentHour === 20)) {
         return 7;
     }
-
-    return -1;
+    // хз... пока так
+    return 7;
 }
 
 function checkAndColorAuditoriums(dateX, pairNumber) {
@@ -103,6 +103,7 @@ function checkAndColorAuditoriums(dateX, pairNumber) {
 }
 
 const date = new Date();
+console.log(date)
 const day = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
 const number = ConvertToPeriod(date.getHours(), date.getMinutes())
 checkAndColorAuditoriums(day, number);
@@ -110,11 +111,9 @@ checkAndColorAuditoriums(day, number);
 const weekdaySelect = document.getElementById('weekday');
 const pairNumberSelect = document.getElementById('pairNumber');
 
-// Устанавливаем значение в селект день недели
-weekdaySelect.value = day;
+document.querySelector(`#weekday option[value=\'${ConvertToWeekday(date.getDay())}\']`).selected = true; // Выбираем опцию "Четверг" в селекте для дня недели
 
-// Устанавливаем значение в селект номер пары
-pairNumberSelect.value = number;
+document.querySelector(`#pairNumber option[value=\'${number}\']`).selected = true; // Выбираем опцию "3 (12:50-14:20)" в селекте для номера пары
 
 
 $(document).ready(function () {
@@ -155,18 +154,30 @@ $(document).click(function(event) {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-    const admitButton = document.querySelector('.admit');
+    const select_weekday = document.querySelector('.select-weekday');
+    const select_pairNumber = document.querySelector('.select-pairNumber');
 
-    admitButton.addEventListener('click', function () {
+
+    
+
+    select_weekday.addEventListener('change', function () {
         const selectedWeekday = document.querySelector('.select-weekday').value;
         const selectedPairNumber = document.querySelector('.select-pairNumber').value;
-        const selectedFloor = document.querySelector('.select-floor').value;
-
         clearInterval(window.timerId);
         checkAndColorAuditoriums(selectedWeekday, selectedPairNumber);
 
     });
+
+    select_pairNumber.addEventListener('change', function () {
+        const selectedWeekday = document.querySelector('.select-weekday').value;
+        const selectedPairNumber = document.querySelector('.select-pairNumber').value;
+        clearInterval(window.timerId);
+        checkAndColorAuditoriums(selectedWeekday, selectedPairNumber);
+
+    });
+
 });
+
 
 document.getElementById("floor").addEventListener("change", function () {
     const selectedMap = this.value;
