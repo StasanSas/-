@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const selectedFloor = document.querySelector('.select-floor').value;
 
         clearInterval(window.timerId);
-        checkAndColorAuditoriums("2024-04-26", 1);
+        checkAndColorAuditoriums(selectedWeekday, selectedPairNumber);
     });
 });
 
