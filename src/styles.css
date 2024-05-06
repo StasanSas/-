@@ -1,14 +1,30 @@
-body{
-    margin: 0;
-    padding: 0;
+
+
+@media only screen and (orientation: portrait) {
+    body{
+        transform: rotate(90deg);
+        transform-origin: top left;
+        width: 100vh;
+        height: 100vw;
+        position: fixed;
+        top: 0;
+        left: 95%;
+    }
+}
+
+/* Стили для альбомной ориентации экрана */
+@media only screen and (orientation: landscape) {
+    body{
+
+    }
 }
 
 .scheme{
-
     position: absolute;
     top: 10%;
     left: 2.5%;
     width: 95%;
+    overflow: auto;
 }
 
 .map{
@@ -41,53 +57,112 @@ svg{
     stroke: white;
 }
 
-.header {
-    height: 100px;
-    background-color: #b2aeae;
+
+
+@media only screen and (orientation: portrait) {
+    .header {
+        height: 60px;
+        background-color: #b2aeae;
+    }
+
+    .scheme {
+        top: 50%;
+        left: -1%;
+        width: 90%;
+    }
+
+    .label-weekday {
+        margin: 5px auto 0 20px;
+        position: absolute;
+        font-family: Georgia, serif;
+        font-weight: bold;
+    }
+
+    .select-weekday {
+        margin: 25px auto 0 20px;
+        width: 20%;
+        height: 30px;
+    }
+
+    .label-pairNumber {
+        margin: 5px auto 0 45px;
+        position: absolute;
+        font-family: Georgia, serif;
+        font-weight: bold;
+    }
+
+    .select-pairNumber {
+        margin: 25px auto 0 45px;
+        width: 20%;
+        height: 30px;
+    }
+
+    .label-floor {
+        margin: 5px auto 0 45px;
+        position: absolute;
+        font-family: Georgia, serif;
+        font-weight: bold;
+    }
+
+    .select-floor {
+        margin: 25px auto 0 45px;
+        width: 20%;
+        height: 30px;
+    }
 }
 
-.scheme {
-    top: 175px;
+/* Стили для альбомной ориентации экрана */
+@media only screen and (orientation: landscape) {
+    .header {
+        height: 100px;
+        background-color: #b2aeae;
+    }
+
+    .scheme {
+        top: 175px;
+    }
+
+    .label-weekday {
+        margin: 25px auto auto 30px;
+        position: absolute;
+        font-family: Georgia, serif;
+        font-weight: bold;
+    }
+
+    .select-weekday {
+        margin: 45px auto auto 30px;
+        width: 20%;
+        height: 30px;
+    }
+
+    .label-pairNumber {
+        margin: 25px auto auto 65px;
+        position: absolute;
+        font-family: Georgia, serif;
+        font-weight: bold;
+    }
+
+    .select-pairNumber {
+        margin: 45px auto auto 65px;
+        width: 20%;
+        height: 30px;
+    }
+
+    .label-floor {
+        margin: 25px auto auto 85px;
+        position: absolute;
+        font-family: Georgia, serif;
+        font-weight: bold;
+    }
+
+    .select-floor {
+        margin: 45px auto auto 85px;
+        width: 20%;
+        height: 30px;
+    }
 }
 
-.label-weekday {
-    margin: 25px auto auto 50px;
-    position: absolute;
-    font-family: Georgia, serif;
-    font-weight: bold;
-}
 
-.select-weekday {
-    margin: 45px auto auto 50px;
-    width: 250px;
-    height: 30px;
-}
-
-.label-pairNumber {
-    margin: 25px auto auto 75px;
-    position: absolute;
-    font-family: Georgia, serif;
-    font-weight: bold;
-}
-
-.select-pairNumber {
-    margin: 45px auto auto 75px;
-    width: 250px;
-    height: 30px;
-}
-
-.label-floor {
-    margin: 25px auto auto 100px;
-    position: absolute;
-    font-family: Georgia, serif;
-    font-weight: bold;
-}
-
-.select-floor {
-    margin: 45px auto auto 100px;
-    width: 100px;
-    height: 30px;
-}
 
 .admit {
     margin: 0 auto auto 103px;

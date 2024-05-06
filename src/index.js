@@ -1,4 +1,5 @@
 
+
 function getDataFromDatabase(date, pairNumber) {
     const url = `http://localhost:8091/date/${date}/pair/${pairNumber}`;
 
@@ -127,13 +128,21 @@ $(document).ready(function () {
         message.classList.add('my-class');
         message.textContent = text;
         message.style.position = "absolute";
-        message.style.top = `${(this).getBoundingClientRect().top - 50}px`;
-        message.style.left = `${(this).getBoundingClientRect().left}px`;
+        if (window.innerWidth > window.innerHeight) {
+            message.style.top =  `${(this).getBoundingClientRect().top - 10}px`;
+            message.style.left = `${((this).getBoundingClientRect().left + (this).getBoundingClientRect().right)/2 - 70}px`;
+        } else {
+            message.style.top =  `22%`;
+            message.style.left = '5%';
+        }
+
         message.style.background = "rgba(0, 0, 0, 0.8)";
         message.style.color = "white";
         message.style.padding = "10px";
         message.style.zIndex = "1000";
         message.style.borderRadius = "10px";
+        //        message.style.top =  `calc(67% - ${(this).getBoundingClientRect().left }px)`;
+        //         message.style.left = `${(this).getBoundingClientRect().top - 50}px`;
 
         const element = document.querySelector('.my-class');
         if (element !== undefined && element !== null){
