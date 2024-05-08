@@ -76,7 +76,7 @@ function checkAndColorAuditoriums(dateX, pairNumber) {
     const date = new Date();
     const day = ConvertToWeekday(date.getDay());
     const number = ConvertToPeriod(date.getHours(), date.getMinutes())
-    
+
 
     getDataFromDatabase(dateX, pairNumber)
         .then(jsonInfo => {
@@ -100,7 +100,7 @@ function checkAndColorAuditoriums(dateX, pairNumber) {
             console.error('Error while getting data from the database:', error);
         });
 
-    
+
 }
 
 const date = new Date();
@@ -150,7 +150,7 @@ $(document).ready(function () {
         }
         document.body.appendChild(message);
     });
-    
+
 });
 
 $(document).click(function(event) {
@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const select_pairNumber = document.querySelector('.select-pairNumber');
 
 
-    
+
 
     select_weekday.addEventListener('change', function () {
         const selectedWeekday = document.querySelector('.select-weekday').value;
@@ -218,10 +218,10 @@ mondayDate.setDate(currentDate.getDate() - currentDay + (currentDay === 0 ? -6 :
 let select = document.getElementById('weekday');
 let options = select.getElementsByTagName('option');
 for (let i = 0; i < options.length; i++) {
-  let option = options[i];
-  let date = new Date(mondayDate);
-  date.setDate(mondayDate.getDate() + i);
-  let formattedDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
-  option.textContent += ' (' + formattedDate + ')';
-  option.value = formattedDate
+    let option = options[i];
+    let date = new Date(mondayDate);
+    date.setDate(mondayDate.getDate() + i);
+    let formattedDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+    option.textContent += ' (' + formattedDate + ')';
+    option.value = formattedDate;
 }
