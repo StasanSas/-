@@ -1,7 +1,7 @@
 
 
 function getDataFromDatabase(date, pairNumber) {
-    const url = `http://localhost:8091/date/${date}/pair/${pairNumber}`;
+    const url = `http://158.160.75.137:8091/date/${date}/pair/${pairNumber}`;
 
     return fetch(url)
         .then(response => {
@@ -128,8 +128,11 @@ $(document).ready(function () {
         message.classList.add('my-class');
         message.textContent = text;
         message.style.position = "absolute";
-        message.style.top =  `${(this).getBoundingClientRect().top - 10}px`;
-        message.style.left = `${((this).getBoundingClientRect().left + (this).getBoundingClientRect().right)/2 - 70}px`;
+        message.style.top =  `${(this).getBoundingClientRect().top - 10 }px`;
+        console.log((this).getBoundingClientRect().top - 10)
+        console.log((this).getBoundingClientRect().left)
+        console.log((this).getBoundingClientRect().right)
+        message.style.left = `${((this).getBoundingClientRect().left + (this).getBoundingClientRect().right)/2  + window.scrollX}px`;
         if (window.innerWidth <= window.innerHeight) {
             message.style.fontSize = "12px";
         }
