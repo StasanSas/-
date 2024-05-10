@@ -128,12 +128,10 @@ $(document).ready(function () {
         message.classList.add('my-class');
         message.textContent = text;
         message.style.position = "absolute";
-        if (window.innerWidth > window.innerHeight) {
-            message.style.top =  `${(this).getBoundingClientRect().top - 10}px`;
-            message.style.left = `${((this).getBoundingClientRect().left + (this).getBoundingClientRect().right)/2 - 70}px`;
-        } else {
-            message.style.top =  `22%`;
-            message.style.left = '5%';
+        message.style.top =  `${(this).getBoundingClientRect().top - 10}px`;
+        message.style.left = `${((this).getBoundingClientRect().left + (this).getBoundingClientRect().right)/2 - 70}px`;
+        if (window.innerWidth <= window.innerHeight) {
+            message.style.fontSize = "12px";
         }
 
         message.style.background = "rgba(0, 0, 0, 0.8)";
