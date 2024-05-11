@@ -1,5 +1,3 @@
-
-
 function getDataFromDatabase(date, pairNumber) {
     const url = `http://158.160.75.137:8091/date/${date}/pair/${pairNumber}`;
 
@@ -19,26 +17,6 @@ function getDataFromDatabase(date, pairNumber) {
         });
 }
 
-function ConvertToWeekday(day) {
-    switch (day) {
-        case 0:
-            return 'ВС';
-        case 1:
-            return 'ПН';
-        case 2:
-            return 'ВТ';
-        case 3:
-            return 'СР';
-        case 4:
-            return 'ЧТ';
-        case 5:
-            return 'ПТ';
-        case 6:
-            return 'СБ';
-        default:
-            return 'Некорректное значение дня';
-    }
-}
 
 function ConvertToPeriod(currentHour, currentMinute) {
     if ((currentHour === 9) || (currentHour === 10 && currentMinute <= 29)) {
@@ -74,9 +52,6 @@ function ConvertToPeriod(currentHour, currentMinute) {
 
 function checkAndColorAuditoriums(dateX, pairNumber) {
     const date = new Date();
-    const day = ConvertToWeekday(date.getDay());
-    const number = ConvertToPeriod(date.getHours(), date.getMinutes())
-
 
     getDataFromDatabase(dateX, pairNumber)
         .then(jsonInfo => {
@@ -104,17 +79,10 @@ function checkAndColorAuditoriums(dateX, pairNumber) {
 }
 
 const date = new Date();
-console.log(date)
 const day = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
 const number = ConvertToPeriod(date.getHours(), date.getMinutes())
 checkAndColorAuditoriums(day, number);
-
-const weekdaySelect = document.getElementById('weekday');
-const pairNumberSelect = document.getElementById('pairNumber');
-
-document.querySelector(`#weekday option[value=\'${ConvertToWeekday(date.getDay())}\']`).selected = true; // Выбираем опцию "Четверг" в селекте для дня недели
-
-document.querySelector(`#pairNumber option[value=\'${number}\']`).selected = true; // Выбираем опцию "3 (12:50-14:20)" в селекте для номера пары
+document.querySelector(`#pairNumber option[value=\'${number}\']`).selected = true;
 
 
 $(document).ready(function () {
@@ -164,28 +132,23 @@ $(document).click(function(event) {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-    const select_weekday = document.querySelector('.select-weekday');
+    const select_weekday = document.querySelector('.select-date');
     const select_pairNumber = document.querySelector('.select-pairNumber');
 
-
-
-
+    
     select_weekday.addEventListener('change', function () {
-        const selectedWeekday = document.querySelector('.select-weekday').value;
+        const selectedWeekday = document.querySelector('.select-date').value;
         const selectedPairNumber = document.querySelector('.select-pairNumber').value;
         clearInterval(window.timerId);
         checkAndColorAuditoriums(selectedWeekday, selectedPairNumber);
-
     });
 
     select_pairNumber.addEventListener('change', function () {
-        const selectedWeekday = document.querySelector('.select-weekday').value;
+        const selectedWeekday = document.querySelector('.select-date').value;
         const selectedPairNumber = document.querySelector('.select-pairNumber').value;
         clearInterval(window.timerId);
         checkAndColorAuditoriums(selectedWeekday, selectedPairNumber);
-
     });
-
 });
 
 
@@ -204,25 +167,17 @@ document.getElementById("floor").addEventListener("change", function () {
 });
 
 
+document.addEventListener('DOMContentLoaded', function() {
+    let today = new Date();
+    document.getElementById('date').valueAsDate = today;
 
-// Получаем текущую дату
-let currentDate = new Date();
+    let endDate = new Date(today);
+    endDate.setDate(endDate.getDate() + 6);
 
-// Получаем день недели текущей даты (0 - воскресенье, 1 - понедельник, ..., 6 - суббота)
-let currentDay = currentDate.getDay();
+    let year = endDate.getFullYear();
+    let month = endDate.getMonth() + 1 >= 10 ? endDate.getMonth() + 1 : '0' + (endDate.getMonth() + 1);
+    let day = endDate.getDate() >= 10 ? endDate.getDate() : '0' + endDate.getDate();
 
-// Вычисляем дату понедельника текущей недели
-let mondayDate = new Date(currentDate);
-mondayDate.setDate(currentDate.getDate() - currentDay + (currentDay === 0 ? -6 : 1));
-
-// Добавляем даты к каждому дню недели
-let select = document.getElementById('weekday');
-let options = select.getElementsByTagName('option');
-for (let i = 0; i < options.length; i++) {
-    let option = options[i];
-    let date = new Date(mondayDate);
-    date.setDate(mondayDate.getDate() + i);
-    let formattedDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
-    option.textContent += ' (' + formattedDate + ')';
-    option.value = formattedDate;
-}
+    document.getElementById('date').min = today.toISOString().slice(0, 10);
+    document.getElementById('date').max = year + '-' + month + '-' + day;
+});

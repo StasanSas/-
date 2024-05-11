@@ -50,14 +50,14 @@ svg{
     top: 175px;
 }
 
-.label-weekday {
+.label-date {
     margin: 15px auto auto 30px;
     position: absolute;
     font-family: Georgia, serif;
     font-weight: bold;
 }
 
-.select-weekday {
+.select-date {
     margin: 35px auto auto 30px;
     width: 20%;
     height: 30px;
@@ -117,14 +117,14 @@ svg{
         top: 350px;
     }
 
-    .label-weekday {
+    .label-date {
         margin: 5px auto auto 10px;
         position: absolute;
         font-family: Georgia, serif;
         font-weight: bold;
     }
 
-    .select-weekday {
+    .select-date {
         margin: 25px 30px auto 10px;
         width: 95%;
         height: 30px;
@@ -162,14 +162,14 @@ svg{
 
     .scheme {
         width: 100%;
-        overflow-x: auto; /* добавляет горизонтальную прокрутку */
-        white-space: nowrap; /* позволяет элементам располагаться горизонтально */
-        transform: scale(2.0); /* Увеличиваем масштаб содержимого до 200% */
-        transform-origin: 0 0; /* Устанавливаем точку масштабирования в верхний левый угол */
+        overflow-x: auto;
+        white-space: nowrap;
+        transform: scale(2.0);
+        transform-origin: 0 0;
     }
 
     .map {
         display: block;
-        max-width: 100%; /* чтобы изображение не выходило за пределы */
+        max-width: 100%;
     }
 }
