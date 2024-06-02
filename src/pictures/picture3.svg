@@ -1,0 +1,27 @@
+<svg width="640" height="200" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with SVG-edit - https://github.com/SVG-Edit/svgedit-->
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="202" width="642" y="-1" x="-1"/>
+ </g>
+ <g class="layer">
+  <title>Layer 1</title>
+  <path stroke="#cccccc" id="svg_4" fill="#cccccc" d="m4.39,143.535714l-3.64,-64l30.64,-0.25l0.25,-5.25l115.04,-47l-0.5,-25.25l492.82,4.25l-4.77,95.5l-484.27,-3.25l-113.28,45.25l-32.28,0l-0.01,0z"/>
+  <rect y="2" x="147.08" width="15.25" stroke="#ffaaaa" id="svg_12" height="32.5" fill="#ffaaaa"/>
+  <rect y="2.25" x="163.83" width="13" stroke="#ffaaaa" id="svg_13" height="32.25" fill="#ffaaaa"/>
+  <rect y="2.96" x="286.08" width="13.75" stroke="#ffaaaa" id="svg_14" height="33.54" fill="#ffaaaa"/>
+  <rect y="59" x="241.343159" width="29.25" stroke="#ffaaaa" id="svg_15" height="39" fill="#ffaaaa"/>
+  <rect y="58.25" x="245.33" width="7.25" stroke="#cccccc" id="svg_16" height="7" fill="#cccccc"/>
+  <path stroke="#ffaaaa" id="svg_17" fill="#ffaaaa" d="m498.58,44.99c0,0 0.25,-5.62 0.25,-5.62c0,0 1.75,0 1.75,0c0,0 1.25,-34.21 1.25,-34.21c0,0 14.75,0 14.75,0c0,0 -0.75,32.93 -0.75,32.93c0,0 -10.75,0.26 -10.75,0.26c0,0 0.25,7.15 0.25,7.15c0,0 -6.75,-0.51 -6.75,-0.51z"/>
+  <path stroke="#ffaaaa" id="svg_18" fill="#ffaaaa" d="m544.58,11.92c0,0 0.25,-6.71 0.25,-6.71c0,0 -26.66,0 -26.66,0c0,0 -0.76,33.04 -0.76,33.04c0,0 12.95,0 12.95,0c0,0 1.02,-26.85 1.02,-26.85c0,0 13.2,0.52 13.2,0.52z"/>
+  <path stroke="#ffaaaa" id="svg_20" fill="#ffaaaa" d="m532.83,13.13l12,0.51l-1.25,32.37l-11.5,-0.51l0.75,-32.37z"/>
+  <path stroke="#ffaaaa" id="svg_21" fill="#ffaaaa" d="m546.33,5.42c0,0 -1.25,40.82 -1.25,40.82c0,0 30,0.77 30,0.77c0,0 2.25,-41.58 2.25,-41.58c0,0 -31,0 -31,0l0,-0.01z"/>
+  <text y="26.289873" xml:space="preserve" x="152.055943" transform="matrix(0.0278358143278163,-0.9366279743733875,1.7457694856828936,0.014934275460026033,108.91982210737974,160.1566092479514) " text-anchor="middle" stroke-width="0" stroke="#cccccc" id="svg_22" font-size="7" font-family="Serif" fill="#000000">лестница</text>
+  <text stroke="#ffaaaa" transform="matrix(1.3633796818363635,0,0,1.2261886993626376,-61.26756926138939,-4.182725553852853) " y="20.73" xml:space="preserve" x="169.69" text-anchor="middle" stroke-width="0" id="svg_23" font-size="10" font-family="Serif" fill="#000000">Ж</text>
+  <text y="162.91" xml:space="preserve" x="153.37" transform="matrix(0.027828590776994015,-0.9350486253546938,1.7453164486545776,0.014909093174275407,8.652088216810412,161.3547455674553) " text-anchor="middle" stroke-width="0" stroke="#cccccc" id="svg_24" font-size="7" font-family="Serif" fill="#000000">лестница</text>
+  <text y="393.374914" xml:space="preserve" x="154.596031" transform="matrix(0.02570852294457803,-0.9441987221576933,1.6123528613198566,0.01505498895134028,-110.90336589273956,161.4063783597717) " text-anchor="middle" stroke-width="0" stroke="#cccccc" id="svg_25" font-size="7" font-family="Serif" fill="#000000">лестница</text>
+  <text stroke="#ffaaaa" y="35.757002" xml:space="preserve" x="537.809811" transform="rotate(-88.8489990234375 536.708251953125,29.77283096313482) matrix(1.7410311305009998,0,0,1.7222821543075495,-399.63530655537977,-27.75395099317785) " text-anchor="middle" stroke-width="0" id="svg_26" font-size="7" font-family="Serif" fill="#000000">лифт</text>
+  <text stroke="#ffaaaa" transform="matrix(1.3699448108673096,0,0,1.1188708543777466,-185.57137552629865,-3.5253163760735333) " y="27.085797" xml:space="preserve" x="506.954203" text-anchor="middle" stroke-width="0" id="svg_29" font-size="12" font-family="Serif" fill="#000000">М</text>
+ </g>
+</svg>
