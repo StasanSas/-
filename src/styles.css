@@ -112,7 +112,9 @@ tr:first-child td {
 }
 
 .footer {
+    position: fixed;
     text-align: center;
+    bottom: 100px; 
 }
 
 .table-ordinary,
