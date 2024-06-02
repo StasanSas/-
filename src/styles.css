@@ -4,7 +4,6 @@ body{
 }
 
 .scheme{
-
     position: absolute;
     top: 10%;
     left: 2.5%;
@@ -95,6 +94,21 @@ svg{
     height: 30px;
     cursor: pointer;
     background-color: lightgreen;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td {
+    border: 1px solid black;
+    padding: 8px;
+}
+
+tr:first-child td {
+    font-weight: bold;
+    background-color: #f2f2f2;
 }
 
 @media only screen and (orientation: portrait) {

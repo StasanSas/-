@@ -89,46 +89,97 @@ $(document).ready(function () {
     window.timerId = setInterval(checkAndColorAuditoriums, 60000);
 });
 
-$(document).ready(function () {
-    $('.auditorium').click(function () {
-        const text = $(this).find('.auditorium-polygon').attr('description-date');
-        const message = document.createElement("div");
-        message.classList.add('my-class');
-        message.textContent = text;
-        message.style.position = "absolute";
-        message.style.top =  `${(this).getBoundingClientRect().top - 10 }px`;
-        console.log((this).getBoundingClientRect().top - 10)
-        console.log((this).getBoundingClientRect().left)
-        console.log((this).getBoundingClientRect().right)
-        message.style.left = `${((this).getBoundingClientRect().left + (this).getBoundingClientRect().right)/2  + window.scrollX}px`;
-        if (window.innerWidth <= window.innerHeight) {
-            message.style.fontSize = "12px";
+// $(document).ready(function () {
+//     $('.auditorium').click(function () {
+//         const text = $(this).find('.auditorium-polygon').attr('description-date');
+//         const message = document.createElement("div");
+//         message.classList.add('my-class');
+//         message.textContent = text;
+//         message.style.position = "absolute";
+//         message.style.top =  `${(this).getBoundingClientRect().top - 10 }px`;
+//         console.log((this).getBoundingClientRect().top - 10)
+//         console.log((this).getBoundingClientRect().left)
+//         console.log((this).getBoundingClientRect().right)
+//         message.style.left = `${((this).getBoundingClientRect().left + (this).getBoundingClientRect().right)/2  + window.scrollX}px`;
+//         if (window.innerWidth <= window.innerHeight) {
+//             message.style.fontSize = "12px";
+//         }
+//
+//         message.style.background = "rgba(0, 0, 0, 0.8)";
+//         message.style.color = "white";
+//         message.style.padding = "10px";
+//         message.style.zIndex = "1000";
+//         message.style.borderRadius = "10px";
+//         //        message.style.top =  `calc(67% - ${(this).getBoundingClientRect().left }px)`;
+//         //         message.style.left = `${(this).getBoundingClientRect().top - 50}px`;
+//
+//         const element = document.querySelector('.my-class');
+//         if (element !== undefined && element !== null){
+//             element.remove();
+//         }
+//         document.body.appendChild(message);
+//     });
+//
+// });
+
+//$(document).click(function(event) {
+    //if (!$(event.target).closest('.auditorium').length) {
+        //const element = document.querySelector('.my-class');
+        //if (element !== undefined && element !== null){
+            //element.remove();
+        //}
+    //}
+//});
+
+$(document).ready(function() {
+    $('.auditorium-polygon').click(function() {
+        let description = $(this).attr('description-date');
+        let auditoriumElement = this.parentNode;
+        let container = document.getElementById("footer");
+
+        if (globalThis.table !== null && globalThis.table !== undefined) {
+            container.removeChild(globalThis.table);
+            container.removeChild(globalThis.spacingElement);
         }
 
-        message.style.background = "rgba(0, 0, 0, 0.8)";
-        message.style.color = "white";
-        message.style.padding = "10px";
-        message.style.zIndex = "1000";
-        message.style.borderRadius = "10px";
-        //        message.style.top =  `calc(67% - ${(this).getBoundingClientRect().left }px)`;
-        //         message.style.left = `${(this).getBoundingClientRect().top - 50}px`;
+        const metadata = auditoriumElement.querySelector('metadata');
+        const descriptionSocket = metadata.querySelector('description-socket').textContent.trim();
+        const descriptionProjector = metadata.querySelector('description-projector').textContent.trim();
+        const descriptionBlackboard = metadata.querySelector('description-blackboard').textContent.trim();
 
-        const element = document.querySelector('.my-class');
-        if (element !== undefined && element !== null){
-            element.remove();
+        globalThis.table = document.createElement('table');
+
+        let data = [
+            ['Розетки', 'Проектор', 'Доска'],
+            [descriptionSocket, descriptionProjector, descriptionBlackboard]
+        ];
+
+        for (let i = 0; i < data.length; i++) {
+            let row = globalThis.table.insertRow();
+            for (let j = 0; j < data[i].length; j++) {
+                let cell = row.insertCell();
+                cell.textContent = data[i][j];
+            }
         }
-        document.body.appendChild(message);
+
+        globalThis.spacingElement = document.createElement('div');
+        globalThis.spacingElement.style.height = '500px';
+
+        container.appendChild(globalThis.spacingElement);
+        container.appendChild(globalThis.table);
     });
 
-});
-
-$(document).click(function(event) {
-    if (!$(event.target).closest('.auditorium').length) {
-        const element = document.querySelector('.my-class');
-        if (element !== undefined && element !== null){
-            element.remove();
+    $(document).click(function(event) {
+        if (!$(event.target).closest('.auditorium-polygon').length) {
+            if (globalThis.table) {
+                let container = document.getElementById("footer");
+                container.removeChild(globalThis.table);
+                container.removeChild(globalThis.spacingElement);
+                delete globalThis.table;
+                delete globalThis.spacingElement;
+            }
         }
-    }
+    });
 });
 
 document.addEventListener('DOMContentLoaded', function () {
