@@ -1,5 +1,11 @@
+const SPECIAL = new Set([
+    "515а", "501", "512", "520", "522", "524а", "524", "526", "530", "534", "538", "540",
+    "631", "617", "615", "613", "609", "607", "618", "620", "624", "626", "630", "632а", "634", "636", "638", "640"
+]);
+
+
 function getDataFromDatabase(date, pairNumber) {
-    const url = `http://158.160.75.137:8091/date/${date}/pair/${pairNumber}`;
+    const url = `http://localhost:8091/date/${date}/pair/${pairNumber}`;
 
     return fetch(url)
         .then(response => {
@@ -51,7 +57,7 @@ function ConvertToPeriod(currentHour, currentMinute) {
 }
 
 function checkAndColorAuditoriums(dateX, pairNumber) {
-    const date = new Date();
+    globalThis.request = {};
 
     getDataFromDatabase(dateX, pairNumber)
         .then(jsonInfo => {
@@ -59,6 +65,11 @@ function checkAndColorAuditoriums(dateX, pairNumber) {
 
             for (let info of jsonInfo) {
                 busyAuditoriums.push(info["auditory"]);
+                globalThis.request[info["auditory"]] = {
+                    "lesson": info["lesson"],
+                    "groupName": info["groupName"],
+                    "teacherName": info["teacherName"]
+                }
             }
 
             $(".auditorium").each(function () {
@@ -67,18 +78,20 @@ function checkAndColorAuditoriums(dateX, pairNumber) {
                 if (busyAuditoriums.includes(auditoriumId)) {
                     $(this).find(".auditorium-polygon").attr("fill", "red");
                 } else {
-                    $(this).find(".auditorium-polygon").attr("fill", "green");
+                    if (SPECIAL.has(auditoriumId)) {
+                        $(this).find(".auditorium-polygon").attr("fill", "darkkhaki");
+                    } else {
+                        $(this).find(".auditorium-polygon").attr("fill", "green");
+                    }
                 }
             });
         })
         .catch(error => {
             console.error('Error while getting data from the database:', error);
         });
-
-
 }
 
-const date = new Date();
+const date = new Date(2024, 4, 28);
 const day = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
 const number = ConvertToPeriod(date.getHours(), date.getMinutes())
 checkAndColorAuditoriums(day, number);
@@ -131,50 +144,97 @@ $(document).ready(function () {
     //}
 //});
 
+function fillTable(table, data) {
+    for (let i = 0; i < data.length; i++) {
+        let row = table.insertRow();
+        for (let j = 0; j < data[i].length; j++) {
+            let cell = row.insertCell();
+            cell.textContent = data[i][j];
+        }
+    }
+}
+
 $(document).ready(function() {
-    $('.auditorium-polygon').click(function() {
-        let description = $(this).attr('description-date');
+    $('.auditorium-polygon, .auditorium-text').click(function() {
         let auditoriumElement = this.parentNode;
         let container = document.getElementById("footer");
+
+        console.log(globalThis.table1);
+
+        if (globalThis.table1 !== null && globalThis.table1 !== undefined) {
+            container.removeChild(globalThis.table1);
+        }
+
 
         if (globalThis.table !== null && globalThis.table !== undefined) {
             container.removeChild(globalThis.table);
             container.removeChild(globalThis.spacingElement);
         }
 
+        let data = [];
         const metadata = auditoriumElement.querySelector('metadata');
-        const descriptionSocket = metadata.querySelector('description-socket').textContent.trim();
-        const descriptionProjector = metadata.querySelector('description-projector').textContent.trim();
-        const descriptionBlackboard = metadata.querySelector('description-blackboard').textContent.trim();
-
         globalThis.table = document.createElement('table');
 
-        let data = [
-            ['Розетки', 'Проектор', 'Доска'],
-            [descriptionSocket, descriptionProjector, descriptionBlackboard]
-        ];
+        if (SPECIAL.has(auditoriumElement.id)) {
+            const type = metadata.querySelector('type').textContent.trim();
+            const description = metadata.querySelector('description').textContent.trim();
 
-        for (let i = 0; i < data.length; i++) {
-            let row = globalThis.table.insertRow();
-            for (let j = 0; j < data[i].length; j++) {
-                let cell = row.insertCell();
-                cell.textContent = data[i][j];
-            }
+            globalThis.table.classList.add('table-special');
+
+            data = [
+                [type],
+                [description]
+            ];
+        } else {
+            const descriptionSocket = metadata.querySelector('description-socket').textContent.trim();
+            const descriptionProjector = metadata.querySelector('description-projector').textContent.trim();
+            const descriptionBlackboard = metadata.querySelector('description-blackboard').textContent.trim();
+
+            globalThis.table.classList.add('table-ordinary');
+
+            data = [
+                ['Розетки', 'Проектор', 'Доска'],
+                [descriptionSocket, descriptionProjector, descriptionBlackboard]
+            ];
         }
+
+        fillTable(globalThis.table, data);
 
         globalThis.spacingElement = document.createElement('div');
         globalThis.spacingElement.style.height = '500px';
 
         container.appendChild(globalThis.spacingElement);
         container.appendChild(globalThis.table);
+
+        if (SPECIAL.has(auditoriumElement.id) || !request.hasOwnProperty(auditoriumElement.id)) {
+            globalThis.table1 = undefined;
+            return;
+        }
+
+        globalThis.table1 = document.createElement('table');
+        globalThis.table1.classList.add('table-ordinary1');
+        const info = globalThis.request[auditoriumElement.id];
+
+        const data1 = [
+            ['Дисциплина', 'Группа', 'Преподаватель'],
+            [info["lesson"], info["groupName"], info["teacherName"] || '-']
+        ];
+
+        fillTable(globalThis.table1, data1);
+
+        container.appendChild(globalThis.table1);
     });
 
     $(document).click(function(event) {
-        if (!$(event.target).closest('.auditorium-polygon').length) {
+        if (!$(event.target).closest('.auditorium-polygon, .auditorium-text').length) {
             if (globalThis.table) {
                 let container = document.getElementById("footer");
+                if (globalThis.table1) {
+                    container.removeChild(globalThis.table1);
+                }
                 container.removeChild(globalThis.table);
                 container.removeChild(globalThis.spacingElement);
+                delete globalThis.table1;
                 delete globalThis.table;
                 delete globalThis.spacingElement;
             }
@@ -219,7 +279,7 @@ document.getElementById("floor").addEventListener("change", function () {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    let today = new Date();
+    let today = new Date(2024, 4, 28);
     document.getElementById('date').valueAsDate = today;
 
     let endDate = new Date(today);
