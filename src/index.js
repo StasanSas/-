@@ -5,7 +5,7 @@ const SPECIAL = new Set([
 
 
 function getDataFromDatabase(date, pairNumber) {
-    const url = `http://192.168.0.103:8091/date/${date}/pair/${pairNumber}`;
+    const url = `http://localhost:8091/date/${date}/pair/${pairNumber}`;
 
     return fetch(url)
         .then(response => {
