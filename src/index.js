@@ -223,6 +223,10 @@ $(document).ready(function() {
         fillTable(globalThis.table1, data1);
 
         container.appendChild(globalThis.table1);
+
+
+
+        
     });
 
     $(document).click(function(event) {

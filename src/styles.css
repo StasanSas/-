@@ -5,7 +5,7 @@ body{
 
 .scheme{
     position: absolute;
-    top: 10%;
+    top: 20%;
     left: 2.5%;
     width: 95%;
 }
@@ -112,7 +112,7 @@ tr:first-child td {
 }
 
 .footer {
-    position: fixed;
+    /* position: fixed; */
     text-align: center;
     top: 100px;
     z-index: -1;
@@ -206,5 +206,12 @@ tr:first-child td {
     .map {
         display: block;
         max-width: 100%;
+    }
+
+    .footer {
+        position: fixed;
+        text-align: center;
+        top: 100px;
+        z-index: -1;
     }
 }
