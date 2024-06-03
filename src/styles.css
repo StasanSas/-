@@ -114,7 +114,8 @@ tr:first-child td {
 .footer {
     position: fixed;
     text-align: center;
-    bottom: 100px; 
+    top: 100px;
+    z-index: -1;
 }
 
 .table-ordinary,
