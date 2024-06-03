@@ -112,10 +112,7 @@ tr:first-child td {
 }
 
 .footer {
-    position: fixed;
     text-align: center;
-    top: 100px;
-    z-index: -1;
 }
 
 .table-ordinary,
@@ -144,25 +141,25 @@ tr:first-child td {
     .header {
         position: fixed;
         width: 100%;
-        height: 190px;
+        height: 140px;
         background-color: #b2aeae;
     }
 
     .scheme {
-        top: 350px;
+        top: 225px;
     }
 
     .label-date {
         margin: 5px auto auto 10px;
-        position: absolute;
+        display: flex;
         font-family: Georgia, serif;
         font-weight: bold;
     }
 
     .select-date {
         margin: 25px 30px auto 10px;
-        width: 95%;
-        height: 30px;
+        width: 33%;
+        height: 25px;
     }
 
     .label-pairNumber {
@@ -174,20 +171,20 @@ tr:first-child td {
 
     .select-pairNumber {
         margin: 25px 30px auto 10px;
-        width: 95%;
+        width: 33%;
         height: 30px;
     }
 
     .label-floor {
         margin: 5px auto auto 10px;
-        position: absolute;
+        display: flex;
         font-family: Georgia, serif;
         font-weight: bold;
     }
 
     .select-floor {
         margin: 25px auto auto 10px;
-        width: 95%;
+        width: 35%;
         height: 30px;
     }
 
@@ -198,6 +195,7 @@ tr:first-child td {
     .scheme {
         width: 100%;
         overflow-x: auto;
+        overflow-y: clip;
         white-space: nowrap;
         transform: scale(2.0);
         transform-origin: 0 0;
@@ -206,5 +204,18 @@ tr:first-child td {
     .map {
         display: block;
         max-width: 100%;
+    }
+
+    .table-ordinary,
+    .table-ordinary1,
+    .table-special {
+        width: 350px;
+        font-size: 11px;
+    }
+
+    .table-ordinary td,
+    .table-ordinary1 td,
+    .table-special td {
+        font-size: 10px;
     }
 }

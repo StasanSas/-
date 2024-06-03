@@ -1,11 +1,11 @@
 const SPECIAL = new Set([
-    "515а", "501", "512", "520", "522", "524а", "524", "526", "530", "534", "538", "540",
+    "515а", "501", "512", "520", "522", "524а", "524", "530", "534", "538", "540",
     "631", "617", "615", "613", "609", "607", "618", "620", "624", "626", "630", "632а", "634", "636", "638", "640"
 ]);
 
 
 function getDataFromDatabase(date, pairNumber) {
-    const url = `http://localhost:8091/date/${date}/pair/${pairNumber}`;
+    const url = `http://192.168.0.103:8091/date/${date}/pair/${pairNumber}`;
 
     return fetch(url)
         .then(response => {
@@ -201,32 +201,49 @@ $(document).ready(function() {
         fillTable(globalThis.table, data);
 
         globalThis.spacingElement = document.createElement('div');
-        globalThis.spacingElement.style.height = '500px';
+
+        let floorNow;
+        if (document.getElementById('floor').value === '5') {
+            floorNow = document.getElementById('5picture').height;
+        } else {
+            floorNow = document.getElementById('6picture').height;
+        }
+
+        const flag = SPECIAL.has(auditoriumElement.id) || !request.hasOwnProperty(auditoriumElement.id);
+
+        if (window.innerWidth > window.innerHeight) {
+            globalThis.spacingElement.style.height = `${floorNow + 25}px`;
+        } else {
+            globalThis.spacingElement.style.height = `${floorNow + (flag ? 350 : 310)}px`;
+        }
 
         container.appendChild(globalThis.spacingElement);
         container.appendChild(globalThis.table);
 
-        if (SPECIAL.has(auditoriumElement.id) || !request.hasOwnProperty(auditoriumElement.id)) {
+        if (flag) {
             globalThis.table1 = undefined;
-            return;
+        } else {
+            globalThis.table1 = document.createElement('table');
+            globalThis.table1.classList.add('table-ordinary1');
+            const info = globalThis.request[auditoriumElement.id];
+
+            const data1 = [
+                ['Дисциплина', 'Группа', 'Преподаватель'],
+                [info["lesson"], info["groupName"], info["teacherName"] || '-']
+            ];
+
+            fillTable(globalThis.table1, data1);
+
+            globalThis.table1.style.top = `${globalThis.table.getBoundingClientRect().bottom + 20}px`;
+
+            container.appendChild(globalThis.table1);
         }
 
-        globalThis.table1 = document.createElement('table');
-        globalThis.table1.classList.add('table-ordinary1');
-        const info = globalThis.request[auditoriumElement.id];
-
-        const data1 = [
-            ['Дисциплина', 'Группа', 'Преподаватель'],
-            [info["lesson"], info["groupName"], info["teacherName"] || '-']
-        ];
-
-        fillTable(globalThis.table1, data1);
-
-        container.appendChild(globalThis.table1);
+        updateTables();
     });
 
     $(document).click(function(event) {
-        if (!$(event.target).closest('.auditorium-polygon, .auditorium-text').length) {
+        if (!$(event.target).closest('.auditorium-polygon, .auditorium-text, .table-ordinary, .table-ordinary1, .table-special').length) {
             if (globalThis.table) {
                 let container = document.getElementById("footer");
                 if (globalThis.table1) {
@@ -241,6 +258,26 @@ $(document).ready(function() {
         }
     });
 });
+
+function updateTables() {
+    if (window.innerWidth > window.innerHeight) {
+        return;
+    }
+
+    const xPosition = window.scrollX + 5;
+
+    if (globalThis.table) {
+        globalThis.table.style.position = 'absolute';
+        globalThis.table.style.left = `${xPosition}px`;
+    }
+
+    if (globalThis.table1) {
+        globalThis.table1.style.position = 'absolute';
+        globalThis.table1.style.left = `${xPosition}px`;
+    }
+}
+
+window.addEventListener('scroll', updateTables);
 
 document.addEventListener('DOMContentLoaded', function () {
     const select_weekday = document.querySelector('.select-date');
