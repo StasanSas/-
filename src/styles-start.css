@@ -1,31 +1,50 @@
 
 
-.name {
-    margin: 30px 20px;
-    padding: 15px;
-    border-radius: 10px;
-    border: 2px dashed #333;
-
+.text{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
-
-
 
 .pictures{
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
+    text-align: center;
 }
 
-#pictures-1{
-    text-align: left;
+
+.person{
+    display: flex;
+    flex-direction: column;
+    font-size: 22px;
 }
 
-#pictures-2{
-    text-align: right;
+
+
+
+.description{
+    top : 200px;
+    left: max(30%, 200px);
+    right: max(30%, 200px);
+    position: absolute;
+    text-align: center;
+    max-width: 45%;
+    font-size: 100%;
 }
 
-.person img{
-    width: 300px;
-    height: 300px;
+.button-close{
+
+    margin-left: 42%;
+    font-size: 22px;
+    width: 180px;
+    height: 60px;
+}
+
+.name{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: 52px;
 }
