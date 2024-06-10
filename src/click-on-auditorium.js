@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
         element.addEventListener('click', function () {
             let auditoriumElement= this.parentNode;
             updateAuditoriumOnClick(auditoriumElement)
-            // Добавьте свою логику обработки клика здесь
         });
     });
 

@@ -1,0 +1,31 @@
+
+
+.name {
+    margin: 30px 20px;
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px dashed #333;
+
+}
+
+
+
+.pictures{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#pictures-1{
+    text-align: left;
+}
+
+#pictures-2{
+    text-align: right;
+}
+
+.person img{
+    width: 300px;
+    height: 300px;
+}

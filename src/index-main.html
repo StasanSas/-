@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="ru">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Интерактивная карта матмеха</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="styles.css">
+
+<body>
+<div class="header">
+	<label class="label-date" for="date">Дата</label>
+	<input type="date" class="select-date" id="date" min="" max="">
+
+	<label class="label-pairNumber" for="pairNumber">Номер пары</label>
+	<select class="select-pairNumber" id="pairNumber">
+		<option value="1">1 (09:00-10:30)</option>
+		<option value="2">2 (10:40-12:10)</option>
+		<option value="3">3 (12:50-14:20)</option>
+		<option value="4">4 (14:30-16:00)</option>
+		<option value="5">5 (16:10-17:40)</option>
+		<option value="6">6 (17:50-19:20)</option>
+		<option value="7">7 (19:30-21:00)</option>
+	</select>
+
+	<label class="label-floor" for="floor">Этаж</label>
+	<select class="select-floor" id="floor">
+		<option value="5" >5</option>
+		<option value="6" selected="selected">6</option>
+	</select>
+
+	<button class="find-pair-button">Где моя пара?</button>
+</div>
+
+<div class="popup" id="popup" style="display: none">
+	<button class="popup-close">✖</button>
+
+	<p>Не помнишь, в какой аудитории будет пара? Воспользуйся быстрым поиском!</p>
+
+	<label for="groupInput">Выбери номер группы:</label>
+	<input type="text" id="groupInput" list="groupsList" placeholder="Например: 220802">
+
+	<datalist id="groupsList">
+		<option value="МЕН-221015">МЕН-221015</option>
+		<option value="МЕН-220801">МЕН-220801</option>
+		<option value="МЕН-131015">МЕН-131015</option>
+		<option value="МЕН-220104">МЕН-220104</option>
+		<option value="УГИ-403204">УГИ-403204</option>
+		<option value="МЕН-130802">МЕН-130802</option>
+		<option value="МЕН-222204">МЕН-222204</option>
+		<option value="МЕН-312202">МЕН-312202</option>
+		<option value="МЕН-130801">МЕН-130801</option>
+		<option value="УГИ-313207">УГИ-313207</option>
+		<option value="МЕН-311001">МЕН-311001</option>
+		<option value="МЕН-130809">МЕН-130809</option>
+		<option value="УГИ-313203">УГИ-313203</option>
+		<option value="УГИ-133208">УГИ-133208</option>
+		<option value="МЕН-313201">МЕН-313201</option>
+		<option value="МЕН-310201">МЕН-310201</option>
+		<option value="МЕН-220202">МЕН-220202</option>
+		<option value="МЕН-311015">МЕН-311015</option>
+		<option value="УГИ-313202">УГИ-313202</option>
+		<option value="МЕН-220701">МЕН-220701</option>
+		<option value="МЕН-131001">МЕН-131001</option>
+		<option value="МЕН-401015">МЕН-401015</option>
+		<option value="МЕН-130208">МЕН-130208</option>
+		<option value="МЕН-133201">МЕН-133201</option>
+		<option value="МЕНМ-130201">МЕНМ-130201</option>
+		<option value="УГИ-223207">УГИ-223207</option>
+		<option value="УГИ-313205">УГИ-313205</option>
+		<option value="УГИ-223504">УГИ-223504</option>
+		<option value="МЕН-220809">МЕН-220809</option>
+		<option value="УГИ-223201">УГИ-223201</option>
+		<option value="МЕН-310203">МЕН-310203</option>
+		<option value="МЕН-310101">МЕН-310101</option>
+		<option value="Иностранный язык КИЯиОТ ИЯиОТ СУОС 1 2023">Иностранный язык КИЯиОТ ИЯиОТ СУОС 1 2023</option>
+		<option value="УГИ-135103">УГИ-135103</option>
+		<option value="НМТМ-131204">НМТМ-131204</option>
+		<option value="УГИМ-130007">УГИМ-130007</option>
+		<option value="МЕНМ-132201">МЕНМ-132201</option>
+		<option value="МЕНМ-130112">МЕНМ-130112</option>
+		<option value="МЕН-310204">МЕН-310204</option>
+		<option value="МЕН-310701">МЕН-310701</option>
+		<option value="МЕН-132203">МЕН-132203</option>
+		<option value="МЕН-130102">МЕН-130102</option>
+		<option value="МЕН-223202">МЕН-223202</option>
+		<option value="МЕН-223001">МЕН-223001</option>
+		<option value="МЕН-130207">МЕН-130207</option>
+		<option value="МЕН-130206">МЕН-130206</option>
+		<option value="МЕН-310102">МЕН-310102</option>
+		<option value="МЕН-220810">МЕН-220810</option>
+		<option value="МЕН-220802">МЕН-220802</option>
+		<option value="МЕН-312201">МЕН-312201</option>
+		<option value="УГИ-133509">УГИ-133509</option>
+		<option value="УГИ-133202">УГИ-133202</option>
+		<option value="МЕН-130705">МЕН-130705</option>
+		<option value="УГИ-313505">УГИ-313505</option>
+		<option value="УГИ-403201">УГИ-403201</option>
+		<option value="МЕН-132201">МЕН-132201</option>
+		<option value="УГИМ-130037">УГИМ-130037</option>
+		<option value="МЕНМ-130213">МЕНМ-130213</option>
+		<option value="УГИ-403202">УГИ-403202</option>
+		<option value="МЕН-220201">МЕН-220201</option>
+		<option value="УГИ-223202">УГИ-223202</option>
+		<option value="МЕН-130101">МЕН-130101</option>
+		<option value="МЕН-400705">МЕН-400705</option>
+		<option value="МЕН-220103">МЕН-220103</option>
+		<option value="МЕН-591015">МЕН-591015</option>
+		<option value="МЕН-130810">МЕН-130810</option>
+		<option value="МЕН-222202">МЕН-222202</option>
+		<option value="МЕНМ-130801">МЕНМ-130801</option>
+		<option value="УГИ-223509">УГИ-223509</option>
+		<option value="УГИ-135102">УГИ-135102</option>
+		<option value="УГИ-223204">УГИ-223204</option>
+		<option value="УГИ-313201">УГИ-313201</option>
+		<option value="МЕН-220203">МЕН-220203</option>
+		<option value="МЕН-310202">МЕН-310202</option>
+	</datalist>
+
+	<div class="overlay" id="overlay"></div>
+	<hr>
+	<button class="apply-button" id="apply-button">Искать</button>
+</div>
+
+
+<div class="scheme" id="5" style="display: none">
+	<svg viewBox="0 0 1412.6689 318.06406">
+
+		<g class="auditorium" id="517">
+			<metadata>
+				<description-socket>У каждого компьютера</description-socket>
+				<description-projector>Есть, картинка хорошего качества</description-projector>
+				<description-blackboard>Маркерная и меловая</description-blackboard>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1338.2539,103.33836 6.9169,0.17892 0.2217,-11.182772 18.2233,0.223655 0.4878,-5.815042 43.0089,0.447312 3.8131,-73.001135 -68.8585,-0.984084
+z" fill="green">
+			</path>
+			<text class="auditorium-text" x="1373" y="54" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">517</text>
+		</g>
+
+		<g class="auditorium" id="515">
+			<metadata>
+				<description-socket>4 на задних партах</description-socket>
+				<description-projector>Отсутствует</description-projector>
+				<description-blackboard>Меловая</description-blackboard>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1296.9703,102.63189
+h 39.1382
+l 3.6195,-88.700872 -63.7989,-0.496229 -3.1287,70.774606 24.8448,0.372172
+z" fill="green">
+			</path>
+			<text class="auditorium-text" x="1306" y="51" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">515</text>
+		</g>
+
+		<g class="auditorium" id="515а">
+			<metadata>
+				<type>Служебная аудитория</type>
+				<description>Отдел операционного события</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1102.3044,84.217491 3.2684,-73.561583 -28.7441,-0.179091 -2.8654,73.069083
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="1306" y="4" dominant-baseline="middle" text-anchor="middle"
+				  font-size="18" fill="white">
+				<tspan x="1092" dy="1.0em">5</tspan>
+				<tspan x="1092" dy="1.0em">1</tspan>
+				<tspan x="1092" dy="1.0em">5</tspan>
+				<tspan x="1089" dy="1.0em">а</tspan>
+			</text>
+		</g>
+
+
+		<g class="auditorium" id="513">
+			<metadata>
+				<description-socket>4 у передних парт</description-socket>
+				<description-projector>Отсутствует</description-projector>
+				<description-blackboard>Меловая</description-blackboard>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1072.1669,101.43574 3.6725,-90.861602 -133.41143,-1.2030456 -1.96287,93.5209676 8.99119,0.31659 0.25327,-11.713863 18.23564,0.316591 -0.0633,9.751002 72.4993,0.18995 0.3799,-10.764088 18.109,0.506545 -0.1899,9.877643
+z" fill="green">
+			</path>
+			<text class="auditorium-text" x="1006" y="51" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">513</text>
+		</g>
+
+		<g class="auditorium" id="511">
+			<metadata>
+				<description-socket>У каждого компьютера</description-socket>
+				<description-projector>Есть, картинка хорошего качества</description-projector>
+				<description-blackboard>Маркерная (лучше принести свои маркеры)</description-blackboard>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 923.39263,102.79817
+h 16.56591
+L 941.839,8.6859082 871.00855,8.3277264 799.10356,7.6113629
+l -1.43273,94.3808971 25.43091,0.53728 0.44772,-11.193186 17.28227,0.358182 0.0896,10.745454 64.65181,-0.53727 0.0896,-10.029093 17.64045,0.179091
+z" fill="green">
+			</path>
+			<text class="auditorium-text" x="868" y="51" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">511</text>
+		</g>
+
+		<g class="auditorium" id="509">
+			<metadata>
+				<description-socket>8 у передних парт</description-socket>
+				<description-projector>Есть, картинка хорошего качества</description-projector>
+				<description-blackboard>Меловая</description-blackboard>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 796.79613,102.3222 1.393,-95.0406079  -134.74112,-1.0130911 -0.0633,95.167239 67.37055,0.56987 22.54128,0.12663 0.18995,-11.270635 19.37537,0.569864 0.0633,10.890731
+z"
+				  description-date="Аудитория с проектором, доска меловая, 8 розеток" fill="green">
+			</path>
+			<text class="auditorium-text" x="735" y="51" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">509</text>
+		</g>
+
+		<g class="auditorium" id="507">
+			<metadata>
+				<description-socket>У каждого компьютера</description-socket>
+				<description-projector>Есть, картинка тусклая</description-projector>
+				<description-blackboard>Меловая</description-blackboard>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="M 602.09269,95.483833 630.93412,95.325538 629.88937,5.7302964 528.54199,4.7906813 531.27313,99.619308 601.99771,100.9292
+Z" fill="green">
+			</path>
+			<text class="auditorium-text" x="580" y="51" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">507</text>
+		</g>
+
+
+		<g class="auditorium" id="505">
+			<metadata>
+				<description-socket>У каждого компьютера</description-socket>
+				<description-projector>Есть, картинка тусклая</description-projector>
+				<description-blackboard>Меловая</description-blackboard>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 530.85972,99.472879 -2.91264,-94.850651 -67.43387,-0.5065455 2.34277,94.0908325 36.15469,0.759819 0.31659,-11.523911 16.20946,0.506545 0.44322,11.777184
+z" fill="green">
+			</path>
+			<text class="auditorium-text" x="497" y="51" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">505</text>
+		</g>
+
+		<g class="auditorium" id="501">
+			<metadata>
+				<type>Служебная аудитория</type>
+				<description>Управление информационно-телекоммуникационной инфраструктуры</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 462.68132,98.320899 -2.50728,-94.4704448 -67.24863,-0.5372727 2.32819,94.6495355 41.36999,0.447728 0.0896,-11.461817 13.25272,0.537272 -0.17909,10.655908
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="430" y="51" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">501</text>
+		</g>
+
+		<g class="auditorium" id="Лаборатории">
+			<metadata>
+				<description-socket>У каждой парты</description-socket>
+				<description-projector>В каждой аудитории и конференц-зале</description-projector>
+				<description-blackboard>Отсутствует</description-blackboard>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="M 330.42269,215.98361 325.09143,59.819862 69.576811,164.22635 69.711129,174.92703 0.94022718,176.04635 8.9595241,316.30603 80.456583,316.6327
+Z" fill="green">
+			</path>
+			<text class="auditorium-text" x="182" y="202" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">Лаборатории</text>
+		</g>
+
+		<g class="auditorium" id="512">
+			<metadata>
+				<type>Служебная аудитория</type>
+				<description>Управление информационно-телекоммуникационной инфраструктуры</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 400.35769,216.61043 -2.59682,-90.4409 -33.66909,0.35818 0.17909,11.73046 -18.99677,-0.22451 -0.12664,-13.17019 -17.60245,-0.12663 3.19109,91.64973
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="362" y="178" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">512</text>
+		</g>
+		<g class="auditorium" id="514">
+			<metadata>
+				<description-socket>У каждого компьютера</description-socket>
+				<description-projector>Есть, картинка тусклая</description-projector>
+				<description-blackboard>Маркерная</description-blackboard>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 532.63263,217.56131 -1.393,-89.21534 -77.6024,-1.28098 -0.0448,11.99909 -17.23749,-0.71637 -0.17909,-12.26772 -37.9225,0.0895 2.82068,90.57522
+z" fill="green">
+			</path>
+			<text class="auditorium-text" x="463" y="178" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">514</text>
+		</g>
+
+		<g class="auditorium" id="520">
+			<metadata>
+				<type>Загадка человечества</type>
+				<description>Неопознанная аудитория</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 598.74562,217.99839 65.86068,0.40295 0.0448,-76.38226 -18.53591,-0.0448 0.17909,-12.40204 -48.6655,-0.62476
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="632" y="178" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">520</text>
+		</g>
+
+		<g class="auditorium" id="522">
+			<metadata>
+				<type>Служебная аудитория</type>
+				<description>Управление корпоративного ИТ-обучения и инновации</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 665.25258,218.22615 64.81144,0.53337 0.62682,-86.94862 -31.43046,-0.26864
+v 10.3425
+l -17.89332,0.67615 0.0633,-11.61889 -16.84264,-0.18995
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="698" y="178" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">522</text>
+		</g>
+
+		<g class="auditorium" id="524а">
+			<metadata>
+				<type>Служебная аудитория</type>
+				<description>Управление корпоративного ИТ-обучения и инновации</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 796.66949,219.20758 0.82314,-70.28319 -66.08543,0.25832 -0.4925,69.80068
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="763" y="185" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">524а</text>
+		</g>
+
+		<g class="auditorium" id="524">
+			<metadata>
+				<type>Аудитория для тестирования</type>
+				<description>Центр тестирования PEARSON VUE</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 828.65355,219.43111 1.25364,-77.45681 -17.01364,0.17909 -0.13431,-10.20818 -14.32727,0.0448 -0.985,87.4859
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="820" y="135" dominant-baseline="middle" text-anchor="middle"
+				  font-size="24" fill="white">
+				<tspan x="815" dy="1.0em">5</tspan>
+				<tspan x="815" dy="1.0em">2</tspan>
+				<tspan x="812" dy="1.0em">4</tspan>
+			</text>
+		</g>
+
+		<g class="auditorium" id="526">
+			<metadata>
+				<description-socket>У каждого компьютера</description-socket>
+				<description-projector>Есть, картинка хорошего качества</description-projector>
+				<description-blackboard>Маркерная</description-blackboard>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 936.22278,220.09403 2.40609,-88.45551 -85.85946,-0.18995 -0.37991,10.76409 -22.09805,-0.12664 -1.13973,77.18488
+z" fill="green">
+			</path>
+			<text class="auditorium-text" x="885" y="185" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">526</text>
+		</g>
+
+		<g class="auditorium" id="528">
+			<metadata>
+				<description-socket>У каждого компьютера</description-socket>
+				<description-projector>Есть, картинка хорошего качества</description-projector>
+				<description-blackboard>Маркерная</description-blackboard>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1035.1891,220.60058 2.8493,-87.75901 -6.5851,0.25327 -0.1899,9.751 -16.9693,-0.63318 -0.1899,-10.82741 -74.77248,0.3361 -2.32818,88.56045
+z" fill="green">
+			</path>
+			<text class="auditorium-text" x="987" y="185" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">528</text>
+		</g>
+
+		<g class="auditorium" id="530">
+			<metadata>
+				<type>Служебная аудитория</type>
+				<description>Отдел сопровождения технических средств обучения</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1068.6844,220.91717 3.166,-88.13892 -7.2183,0.0633 -0.19,10.13091 -16.526,0.31659 -0.1267,-10.32087 -8.9911,0.0633 -2.8494,87.82233
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="820" y="135" dominant-baseline="middle" text-anchor="middle"
+				  font-size="24" fill="white">
+				<tspan x="1058" dy="1.0em">5</tspan>
+				<tspan x="1058" dy="1.0em">3</tspan>
+				<tspan x="1054" dy="1.0em">0</tspan>
+			</text>
+		</g>
+
+		<g class="auditorium" id="532">
+			<metadata>
+				<description-socket>4 у передних парт</description-socket>
+				<description-projector>Отсутствует</description-projector>
+				<description-blackboard>Меловая</description-blackboard>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1069.4126,221.2021 130.2772,0.6965 3.3875,-77.88137 -5.1288,-0.095
+V 133.1265
+l -33.8435,0.095 -0.1267,10.79575 -16.7668,0.3748 0.1343,-12.49159 -47.4367,-0.0448 0.022,11.43943 -17.7919,0.37388 -0.1267,-10.6058 -9.466,0.1583
+z" fill="green">
+			</path>
+			<text class="auditorium-text" x="1138" y="185" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">532</text>
+		</g>
+
+		<g class="auditorium" id="534">
+			<metadata>
+				<type>Кафедра</type>
+				<description>Кафедра математического анализа</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1262.3221,222.38611 3.2237,-89.27681
+h -16.8793
+l -0.3582,11.19319 -17.5062,-0.62682 -0.179,-10.47682 -31.9678,-0.0448 0.1164,10.70485 5.0338,0.0633 -3.2926,77.7864
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="1235" y="185" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">534</text>
+		</g>
+
+		<g class="auditorium" id="538">
+			<metadata>
+				<type>Служебная аудитория</type>
+				<description>-</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1331.4549,222.62676 4.179,-88.39219 -10.0676,-0.0633 -0.063,10.76409 -17.7291,-0.25327
+v -10.82741
+l -41.3467,-0.47489 -3.166,88.74045
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="1300" y="185" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">538</text>
+		</g>
+
+		<g class="auditorium" id="540">
+			<metadata>
+				<type>Кафедра</type>
+				<description>Кафедра иностранных языков</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1332.4586,222.2518 68.0769,0.8059 3.6714,-72.75567 -35.4152,-0.35818 0.1793,-7.16133 -13.6134,0.41157 0.032,-8.86455 -18.8688,0.41157
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="1368" y="185" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">540</text>
+		</g>
+
+	</svg>
+
+
+	<img class="map" id="5picture" src="pictures/picture3.svg" alt="">
+</div>
+
+<div class="scheme" id="6" >
+	<svg viewBox="0 0 1706.6667 417.33334">
+
+		<g class="auditorium" id="625">
+			<metadata>
+				<description-socket>16 у доски и левой стены</description-socket>
+				<description-projector>Отсутствует</description-projector>
+				<description-blackboard>Меловая</description-blackboard>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1693.5768,116.61934 0.2164,-103.096689 -78.9723,0.108181 0.5409,101.473978
+z" fill="green">
+			</path>
+			<text class="auditorium-text" x="1655" y="63" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">625</text>
+		</g>
+
+		<g class="auditorium" id="623">
+			<metadata>
+				<description-socket>4 у доски</description-socket>
+				<description-projector>Отсутствует</description-projector>
+				<description-blackboard>Меловая</description-blackboard>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1613.7391,107.96485 -0.1082,-94.766743 -74.4287,0.216363
+v 94.76674
+z" fill="green">
+			</path>
+			<text class="auditorium-text" x="1577" y="63" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">623</text>
+		</g>
+
+		<g class="auditorium" id="631">
+			<metadata>
+				<type>Служебная аудитория</type>
+				<description>РУНЦ</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1345.3415,108.39757 -30.7775,-0.27045 0.054,-94.983103 30.9939,0.270453
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="1331" y="10" dominant-baseline="middle" text-anchor="middle"
+				  font-size="26" fill="white">
+				<tspan x="1333" dy="1.0em">6</tspan>
+				<tspan x="1333" dy="1.0em">3</tspan>
+				<tspan x="1330" dy="1.0em">1</tspan>
+			</text>
+		</g>
+
+		<g class="auditorium" id="621">
+			<metadata>
+				<description-socket>У каждой парты</description-socket>
+				<description-projector>Есть, картинка хорошего качества</description-projector>
+				<description-blackboard>Меловая</description-blackboard>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1312.9953,118.51251 0.6491,-105.043949 -144.2169,-0.196563 -0.306,119.065502 18.8944,0.11475 0.084,-11.99247 19.5538,0.0541 0.2163,10.46653 66.1651,0.1523 -0.039,-12.512
+z" fill="green">
+			</path>
+			<text class="auditorium-text" x="1244" y="70" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">621</text>
+		</g>
+
+		<g class="auditorium" id="617">
+			<metadata>
+				<type>Служебная аудитория</type>
+				<description>Деканат ФПК</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1167.8702,131.65653 -0.054,-118.079788 -35.7568,0.268974 0.2295,102.810174 20.5773,15.37563
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="1150" y="15" dominant-baseline="middle" text-anchor="middle"
+				  font-size="26" fill="white">
+				<tspan x="1153" dy="1.0em">6</tspan>
+				<tspan x="1153" dy="1.0em">1</tspan>
+				<tspan x="1150" dy="1.0em">7</tspan>
+			</text>
+		</g>
+
+		<g class="auditorium" id="615">
+			<metadata>
+				<type>Кафедра</type>
+				<description>Заведующий кафедрой вычислительной математики</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1108.4788,133.82016 -0.1082,-16.76809 22.3935,-0.595 -0.2164,-102.393513 -34.1852,-0.108181 -0.2164,119.918874
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="1150" y="15" dominant-baseline="middle" text-anchor="middle"
+				  font-size="26" fill="white">
+				<tspan x="1116" dy="1.0em">6</tspan>
+				<tspan x="1116" dy="1.0em">1</tspan>
+				<tspan x="1113" dy="1.0em">5</tspan>
+			</text>
+		</g>
+
+		<g class="auditorium" id="613">
+			<metadata>
+				<type>Кафедра</type>
+				<description>Кафедра вычислительной математики</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1094.6857,133.27925 0.1203,-119.586526 -89.5862,0.04629 0.054,118.242056 33.9148,0.32455 0.1082,-11.08858 21.7444,0.16228 0.2705,12.33265
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="1050" y="70" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">613</text>
+		</g>
+
+		<g class="auditorium" id="611">
+			<metadata>
+				<description-socket>4 у доски</description-socket>
+				<description-projector>Есть, картинка хорошего качества</description-projector>
+				<description-blackboard>Меловая</description-blackboard>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1004.0839,131.49426 0.3245,-117.538884 -163.07081,-0.262652 0.0765,118.032816 104.30184,0.38248 0.153,-12.62179 29.45083,-0.30598 0.0765,13.46324
+z" fill="green">
+			</path>
+			<text class="auditorium-text" x="926" y="70" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">611</text>
+		</g>
+
+		<g class="auditorium" id="609">
+			<metadata>
+				<type>Кафедра</type>
+				<description>Научный руководитель кафедры алгебры и дискретной математики, академик Европейской академии наук Л.Н. Шеврин</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 788.78506,132.37575 6.11966,-0.0765 -0.45898,-119.447988 -43.87026,-0.114744 -0.61197,119.447982 16.7908,0.42073 0.30599,-14.80191 21.68652,0.26773
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="776" y="15" dominant-baseline="middle" text-anchor="middle"
+				  font-size="26" fill="white">
+				<tspan x="776" dy="1.0em">6</tspan>
+				<tspan x="776" dy="1.0em">0</tspan>
+				<tspan x="773" dy="1.0em">9</tspan>
+			</text>
+		</g>
+
+		<g class="auditorium" id="607">
+			<metadata>
+				<type>Кафедра</type>
+				<description>Кафедра алгебры и дискретной математики</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 748.72215,131.33199 0.59499,-118.133883 -81.35698,0.379874 0.16699,104.555899 -13.14402,-0.0541 0.16227,13.19811 29.04666,0.27045
+v -13.14402
+l 23.36714,0.10818 0.0811,12.9547
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="710" y="70" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">607</text>
+		</g>
+
+		<g class="auditorium" id="605">
+			<metadata>
+				<description-socket>4 у доски</description-socket>
+				<description-projector>Отсутствует</description-projector>
+				<description-blackboard>Меловая</description-blackboard>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 666.43025,116.5029 0.22948,-103.575132 -83.50892,-1.14e-4 -0.75727,118.187976
+h 47.27519
+l -0.0541,-15.19946
+z" fill="green">
+			</path>
+			<text class="auditorium-text" x="625" y="70" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">605</text>
+		</g>
+
+		<g class="auditorium" id="601">
+			<metadata>
+				<description-socket>4 у доски</description-socket>
+				<description-projector>Отсутствует</description-projector>
+				<description-blackboard>Меловая</description-blackboard>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 581.25764,130.46654 0.59499,-117.106161 -81.02772,-0.108181 -1.46045,115.699802 50.48639,0.21093 -0.0383,-14.30469 16.29358,0.26774 0.11474,15.37563
+z" fill="green">
+			</path>
+			<text class="auditorium-text" x="539" y="70" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">601</text>
+		</g>
+
+		<g class="auditorium" id="602">
+			<metadata>
+				<description-socket>4 у передних парт</description-socket>
+				<description-projector>Отсутствует, но есть телевизор</description-projector>
+				<description-blackboard>Меловая</description-blackboard>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="M 88.581982,281.15982 120.0217,268.72928 161.51455,375.84857 89.141316,404.75999
+Z" fill="green">
+			</path>
+			<text class="auditorium-text" x="115" y="343" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">602</text>
+		</g>
+
+		<g class="auditorium" id="608">
+			<metadata>
+				<description-socket>4 у доски</description-socket>
+				<description-projector>Отсутствует</description-projector>
+				<description-blackboard>Меловая</description-blackboard>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 322.94795,311.02098 73.48209,-29.31711 -43.59703,-103.58351 -27.80257,11.73766 4.75998,10.98039 -18.55308,7.03178 -4.81407,-11.35902 -2.32589,-0.32455 -26.49461,11.38437
+z" fill="green">
+			</path>
+			<text class="auditorium-text" x="339" y="251" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">608</text>
+		</g>
+
+		<g class="auditorium" id="612">
+			<metadata>
+				<description-socket>4 у доски</description-socket>
+				<description-projector>Отсутствует</description-projector>
+				<description-blackboard>Меловая</description-blackboard>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 498.98123,274.61944 0.15299,-109.3888 -31.82219,0.0765 -0.22949,10.5564 -25.32007,-0.15299 -0.0765,-10.55641
+h -28.3034
+l -0.30598,109.61829
+z" fill="green">
+			</path>
+			<text class="auditorium-text" x="458" y="231" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">612</text>
+		</g>
+
+		<g class="auditorium" id="614">
+			<metadata>
+				<description-socket>Розетки у каждой парты</description-socket>
+				<description-projector>Отсутствует</description-projector>
+				<description-blackboard>Меловая</description-blackboard>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 538.72073,275.19316 1.49167,-110.11551 9.3211,0.25028 -0.0271,11.49426 22.28533,0.27045 0.21636,-11.73766 9.51995,0.10818 -0.0541,109.85802
+z" fill="green">
+			</path>
+			<text class="auditorium-text" x="776" y="179" dominant-baseline="middle" text-anchor="middle"
+				  font-size="26" fill="white">
+				<tspan x="562" dy="1.0em">6</tspan>
+				<tspan x="562" dy="1.0em">1</tspan>
+				<tspan x="559" dy="1.0em">4</tspan>
+			</text>
+		</g>
+
+		<g class="auditorium" id="618">
+			<metadata>
+				<type>Кафедра</type>
+				<description>Кафедра теоретической механики</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 669.33708,274.92543 81.57574,-0.0911 -0.27046,-108.07303 -42.67497,-0.15377 -0.38248,13.42499 -24.28737,-0.72671 -0.15299,-13.57798 -13.92221,-0.0383
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="710" y="231" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">618</text>
+		</g>
+
+		<g class="auditorium" id="620">
+			<metadata>
+				<type>Кафедра</type>
+				<description>Заведующий кафедрой теоретической механики</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 796.05143,274.88845 -0.10819,-106.82894 -10.00676,0.10818 -0.43272,11.79175 -20.28398,-0.10818
+v -12.00811
+l -13.11439,-0.0499 0.34423,106.71146
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="774" y="179" dominant-baseline="middle" text-anchor="middle"
+				  font-size="26" fill="white">
+				<tspan x="777" dy="1.0em">6</tspan>
+				<tspan x="777" dy="1.0em">2</tspan>
+				<tspan x="774" dy="1.0em">0</tspan>
+			</text>
+		</g>
+
+		<g class="auditorium" id="622">
+			<metadata>
+				<description-socket>Свободных нет</description-socket>
+				<description-projector>Есть, картинка немного тусклая</description-projector>
+				<description-blackboard>Меловая</description-blackboard>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 797.78233,274.50982 123.00203,0.21636 0.32454,-104.44896 -47.59973,0.21637 -0.27045,12.11629
+h -24.98986
+l -0.10818,-14.06356 -50.52037,-0.14111
+z" fill="green">
+			</path>
+			<text class="auditorium-text" x="858" y="231" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">622</text>
+		</g>
+
+		<g class="auditorium" id="622а">
+			<metadata>
+				<description-socket>4 у доски</description-socket>
+				<description-projector>Отсутствует</description-projector>
+				<description-blackboard>Меловая</description-blackboard>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 922.62344,274.78027 84.65176,-0.27045
+v -83.56999
+l -84.50798,-0.92459
+z" fill="green">
+			</path>
+			<text class="auditorium-text" x="965" y="235" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">622а</text>
+		</g>
+
+		<g class="auditorium" id="624">
+			<metadata>
+				<type>Кафедра</type>
+				<description>Кафедра информатики и процессов управления</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1009.1143,273.91482 74.0501,0.91954 -0.2164,-102.66397 -73.996,-1.18999
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="1046" y="231" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">624</text>
+		</g>
+
+		<g class="auditorium" id="626">
+			<metadata>
+				<type>Служебная аудитория</type>
+				<description>С.А. Рогожин (первый заместитель директора), М.О. Асанов (директор Уральского регионального центра образования и разработок)</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1084.4791,274.46645 44.5204,0.30598 -0.076,-89.27044 -19.5828,0.15299 -0.2295,-13.53973 -24.4021,0.38248
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="774" y="179" dominant-baseline="middle" text-anchor="middle"
+				  font-size="26" fill="white">
+				<tspan x="1110" dy="1.0em">6</tspan>
+				<tspan x="1110" dy="1.0em">2</tspan>
+				<tspan x="1107" dy="1.0em">6</tspan>
+			</text>
+		</g>
+
+		<g class="auditorium" id="628">
+			<metadata>
+				<description-socket>4 у доски</description-socket>
+				<description-projector>Отсутствует</description-projector>
+				<description-blackboard>Меловая</description-blackboard>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1131.0267,185.00477 -0.153,90.45612 110.498,-0.0765 -0.076,-104.56958 -88.9645,0.34423 -16.8673,13.80747
+z" fill="green">
+			</path>
+			<text class="auditorium-text" x="1185" y="231" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">628</text>
+		</g>
+
+		<g class="auditorium" id="630">
+			<metadata>
+				<type>Загадка человечества</type>
+				<description>Неопознанная аудитория</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1242.8939,275.05072 38.5666,0.0541 0.5409,-102.98851 -39.2698,-0.86545
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="774" y="179" dominant-baseline="middle" text-anchor="middle"
+				  font-size="26" fill="white">
+				<tspan x="1265" dy="1.0em">6</tspan>
+				<tspan x="1265" dy="1.0em">3</tspan>
+				<tspan x="1262" dy="1.0em">0</tspan>
+			</text>
+		</g>
+
+		<g class="auditorium" id="632">
+			<metadata>
+				<description-socket>У каждой парты</description-socket>
+				<description-projector>Есть, картинка хорошего качества</description-projector>
+				<description-blackboard>Меловая и маркерная</description-blackboard>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1283.2531,274.46645 183.1973,0.96291 0.1893,-104.34078 -182.6599,0.95017
+z" fill="green">
+			</path>
+			<text class="auditorium-text" x="1377" y="231" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">632</text>
+		</g>
+
+		<g class="auditorium" id="632а">
+			<metadata>
+				<type>Служебная аудитория</type>
+				<description>-</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1468.1813,275.05072 33.1034,0.37864 0.2705,-104.12442 -33.1035,0.0541
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="1484" y="174" dominant-baseline="middle" text-anchor="middle"
+				  font-size="22" fill="white">
+				<tspan x="1487" dy="1.0em">6</tspan>
+				<tspan x="1487" dy="1.0em">3</tspan>
+				<tspan x="1487" dy="1.0em">2</tspan>
+				<tspan x="1484" dy="1.0em">а</tspan>
+			</text>
+		</g>
+
+		<g class="auditorium" id="634">
+			<metadata>
+				<type>Служебная аудитория</type>
+				<description>-</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1503.1207,171.12081 35.7044,0.61196 1.1092,104.22535 -37.0239,-0.57372
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="1484" y="174" dominant-baseline="middle" text-anchor="middle"
+				  font-size="26" fill="white">
+				<tspan x="1524" dy="1.0em">6</tspan>
+				<tspan x="1524" dy="1.0em">3</tspan>
+				<tspan x="1520" dy="1.0em">4</tspan>
+			</text>
+		</g>
+
+		<g class="auditorium" id="636">
+			<metadata>
+				<type>Лаборатория</type>
+				<description>Математическое моделирование в физиологии и медицине с использованием суперкомпьютерных технологий</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1541.42,275.26709 38.4043,0.16227 0.3245,-104.39487 -40.027,0.91954
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="1560" y="174" dominant-baseline="middle" text-anchor="middle"
+				  font-size="26" fill="white">
+				<tspan x="1564" dy="1.0em">6</tspan>
+				<tspan x="1564" dy="1.0em">3</tspan>
+				<tspan x="1560" dy="1.0em">6</tspan>
+			</text>
+		</g>
+
+		<g class="auditorium" id="638">
+			<metadata>
+				<type>Лаборатория</type>
+				<description>Проблемная научно-исследовательская лаборатория прикладного анализа</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1582.7452,170.76404 -0.9196,104.28668 36.3489,0.27046 -0.595,-103.79987
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="1560" y="174" dominant-baseline="middle" text-anchor="middle"
+				  font-size="26" fill="white">
+				<tspan x="1604" dy="1.0em">6</tspan>
+				<tspan x="1604" dy="1.0em">3</tspan>
+				<tspan x="1600" dy="1.0em">8</tspan>
+			</text>
+		</g>
+
+		<g class="auditorium" id="640">
+			<metadata>
+				<type>Кафедра</type>
+				<description>Кафедра математической экономики, заведующий кафедрой математической экономики</description>
+			</metadata>
+			<path class="auditorium-polygon"
+				  d="m 1620.0635,172.38298 36.9856,-0.11474 -0.3825,-41.80488 -10.7858,-0.22949 0.038,-12.3923
+h 47.0066
+l -0.038,158.11655 -72.6032,-0.3124
+z" fill="darkkhaki">
+			</path>
+			<text class="auditorium-text" x="1656" y="231" dominant-baseline="middle" text-anchor="middle"
+				  font-size="32" fill="white">640</text>
+		</g>
+
+	</svg>
+
+	<img class="map" id="6picture" src="pictures/picture.svg" alt="">
+</div>
+
+<div class="footer" id="footer"> </div>
+
+
+<script src="infrastructure.js"></script>
+<script src="getting-data-from-the-database.js"></script>
+<script src="click-on-auditorium.js"></script>
+<script src="handling-selector-updates.js"></script>
+<script src="group-search.js"></script>
+<script src="index.js"></script>
+</body>
+
+</html>
