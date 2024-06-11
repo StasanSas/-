@@ -1,50 +1,124 @@
-
-
-.text{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+body {
+    background-image: url("pictures/start-background.png");
 }
 
-.pictures{
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    justify-content: flex-start;
-    text-align: center;
+@keyframes fadeIn {
+    0% {
+        opacity: 0.5;
+        transform: translateY(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fadeIn {
+    animation: fadeIn 1s ease-out;
+    animation-fill-mode: forwards;
+}
+
+@media only screen and (orientation: landscape) {
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 95vh;
+    }
+
+    .text {
+        flex: 1;
+        text-align: center;
+    }
+
+    .text h1 {
+        font-size: 48px;
+    }
+
+    .text p {
+        font-size: 20px;
+    }
+
+    .pictures {
+        flex: 1;
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        justify-content: center;
+        grid-column-gap: 50px;
+    }
+
+    .person img {
+        width: 40vh;
+        height: 40vh;
+    }
+
+    .person p {
+        text-align: center;
+    }
+
+    .button {
+        background-color: #007bff;
+        cursor: pointer;
+        width: 150px;
+        height: 50px;
+    }
+
+    .button a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .button:hover {
+        background-color: #0056b3;
+    }
 }
 
 
-.person{
-    display: flex;
-    flex-direction: column;
-    font-size: 22px;
-}
+@media only screen and (orientation: portrait) {
+    .container {
+        justify-content: center;
+    }
 
+    .text p {
+        font-size: 13px;
+    }
 
+    .pictures {
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        grid-column-gap: 20px;
+        margin-top: 15px;
+    }
 
+    .text,
+    .pictures {
+        justify-content: center;
+        text-align: center;
+    }
 
-.description{
-    top : 200px;
-    left: max(30%, 200px);
-    right: max(30%, 200px);
-    position: absolute;
-    text-align: center;
-    max-width: 45%;
-    font-size: 100%;
-}
+    .person img {
+        width: 25vh;
+        height: 25vh;
+    }
 
-.button-close{
+    .person p {
+        text-align: center;
+        font-size: 10px;
+    }
 
-    margin-left: 42%;
-    font-size: 22px;
-    width: 180px;
-    height: 60px;
-}
+    .button {
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+        height: 30px;
+    }
 
-.name{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    font-size: 52px;
+    .button a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .button {
+        background-color: #0056b3;
+    }
 }

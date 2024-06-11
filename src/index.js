@@ -4,7 +4,7 @@ const SPECIAL = new Set([
 ]);
 
 
-const date = new Date(2024, 4, 28);
+const date = new Date(2024, 4, 27);
 const day = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
 const number = ConvertToPeriod(date.getHours(), date.getMinutes())
 checkAndColorAuditoriums(day, number);
