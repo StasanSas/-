@@ -14,13 +14,11 @@ info.forEach((image, index) => {
     const img = document.createElement('img');
     img.src = image[0];
     img.classList.add('fadeIn');
-    img.style.animationDelay = `0.5s`;
     container.appendChild(img);
 
     const name = document.createElement('p');
     name.textContent = image[1];
     name.classList.add('fadeIn');
-    name.style.animationDelay = `0.5s`;
     container.appendChild(name);
 
     picturesContainer.appendChild(container);
