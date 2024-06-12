@@ -1,6 +1,7 @@
 body {
-    background-image: url("pictures/start-background.png");
+    background-image: linear-gradient(to right, rgba(149, 148, 148, 0.66), rgba(255, 255, 255, 0.66));
 }
+
 
 @keyframes fadeIn {
     0% {
@@ -51,8 +52,8 @@ body {
     }
 
     .person img {
-        width: 40vh;
-        height: 40vh;
+        width: 35vh;
+        height: 35vh;
     }
 
     .person p {
