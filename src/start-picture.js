@@ -27,6 +27,13 @@ info.forEach((image, index) => {
 
 const button = document.getElementById('linkButton');
 
+if (localStorage.getItem('lastVisitedPage')) {
+    location.href = localStorage.getItem('lastVisitedPage');
+}
+
 button.addEventListener('click', function() {
     window.location.href = this.querySelector('a').getAttribute('href');
+    localStorage.setItem('lastVisitedPage', 'index-main.html');
 });
+
+

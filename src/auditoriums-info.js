@@ -56,6 +56,8 @@ function deletePrevious(container) {
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.auditorium-polygon, .auditorium-text').forEach(function(element) {
         element.addEventListener('click', function() {
+            clearAnimation();
+
             let auditoriumElement = this.parentNode;
             let container = document.getElementById('footer');
 
