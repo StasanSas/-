@@ -34,10 +34,12 @@ body {
     .text h1 {
         font-size: 48px;
         text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.5);
+        color: #0c478e;
     }
 
     .text p {
-        font-size: 28px;
+        font-size: 24px;
+        font-family: "Segoe UI", sans-serif;
     }
 
     .pictures {
@@ -56,12 +58,13 @@ body {
     .person p {
         text-align: center;
         font-size: 18px;
+        font-family: "Segoe UI", sans-serif;
     }
 
     .button {
         background-color: #3584f2;
         cursor: pointer;
-        width: 150px;
+        width: 200px;
         height: 50px;
     }
 
@@ -83,13 +86,14 @@ body {
     }
 
     .text h1 {
-        font-size: 64px;
+        font-size: 20px;
         text-shadow: 4px 2px 4px rgba(0, 0, 0, 0.5);
+        color: #0c478e;
     }
 
     .text p {
-        font-size: 18px;
-        font-family: 'Roboto', sans-serif;
+        font-size: 16px;
+        font-family: "Segoe UI", sans-serif;
     }
 
     .pictures {
@@ -113,21 +117,21 @@ body {
     .person p {
         text-align: center;
         font-size: 14px;
-        font-family: 'Roboto', sans-serif;
+        font-family: "Segoe UI", sans-serif;
     }
 
     .button {
         background-color: #007bff;
         color: white;
         cursor: pointer;
-        width: 370px;
-        height: 100px;
+        width: 200px;
+        height: 50px;
     }
 
     .button a {
         color: white;
         text-decoration: none;
-        font-size: 42px;
+        font-size: 18px;
     }
 
     .button {

@@ -36,7 +36,10 @@
 	<p>Не помнишь, в какой аудитории будет пара? Воспользуйся быстрым поиском!</p>
 
 	<label for="groupInput">Выбери номер группы:</label>
-	<input type="text" id="groupInput" list="groupsList" placeholder="Например: 220802">
+	<div class="input-container">
+		<input type="text" id="groupInput" list="groupsList" placeholder="Например: МЕН-220802">
+		<button class="reset-button" id="reset-button">Сбросить</button>
+	</div>
 
 	<datalist id="groupsList">
 		<option value="МЕН-221015">МЕН-221015</option>
@@ -948,12 +951,13 @@ z" fill="darkkhaki">
 <div class="footer" id="footer"> </div>
 
 
-<script src="infrastructure.js"></script>
-<script src="getting-data-from-the-database.js"></script>
-<script src="click-on-auditorium.js"></script>
-<script src="handling-selector-updates.js"></script>
+<script src="auditoriums-info.js"></script>
+<script src="coloring-auditoriums.js"></script>
+<script src="getting-schedule.js"></script>
 <script src="group-search.js"></script>
+<script src="header-functions.js"></script>
 <script src="index.js"></script>
+<script src="table-functions.js"></script>
 </body>
 
 </html>

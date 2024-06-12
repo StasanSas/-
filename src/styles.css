@@ -1,27 +1,28 @@
-body{
+body {
     margin: 0;
     padding: 0;
+    background-color: rgba(190, 244, 240, 0.78);
 }
 
-.scheme{
+.scheme {
     position: absolute;
     top: 10%;
     left: 2.5%;
     width: 95%;
 }
 
-.map{
+.map {
     width: 100%;
     height: auto;
 }
 
-svg{
+svg {
     position: absolute;
     width: 100%;
 
 }
 
-.description{
+.description {
     position: absolute;
     left: 25%;
     top: 80%;
@@ -58,7 +59,7 @@ svg{
 
 .select-date {
     margin: 35px auto auto 30px;
-    width: 20%;
+    width: 15%;
     height: 30px;
 }
 
@@ -71,7 +72,7 @@ svg{
 
 .select-pairNumber {
     margin: 25px auto auto 65px;
-    width: 20%;
+    width: 15%;
     height: 30px;
 }
 
@@ -84,16 +85,82 @@ svg{
 
 .select-floor {
     margin: 35px auto auto 75px;
-    width: 20%;
+    width: 15%;
     height: 30px;
 }
 
-.admit {
-    margin: 0 auto auto 103px;
-    width: 100px;
-    height: 30px;
+.find-pair-button {
+    margin: 15px auto auto 75px;
+    background-color: #21d14a;
     cursor: pointer;
-    background-color: lightgreen;
+    width: 120px;
+    height: 30px;
+}
+
+.find-pair-button:hover {
+    background-color: #acec9e;
+}
+
+.popup input {
+    padding: 8px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.popup p, .popup label {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 20px;
+    font-family: "Segoe UI", sans-serif;
+}
+
+.reset-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    padding: 8px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.reset-button:hover {
+    background-color: #d32f2f;
+}
+
+.reset-button:active {
+    background-color: #b71c1c;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+}
+
+.apply-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.apply-button:hover {
+    background-color: #45a049;
+}
+
+.apply-button:active {
+    background-color: #3e8e41;
 }
 
 table {
@@ -131,6 +198,12 @@ tr:first-child td {
     width: 33.33%;
 }
 
+.table-ordinary tr,
+.table-ordinary1 tr,
+.table-special tr {
+    background-color: white;
+}
+
 .table-window tr:hover {
     background-color: #f0f0f0;
     cursor: pointer;
@@ -142,7 +215,7 @@ tr:first-child td {
 }
 
 .table-window tr.clickable-row:hover {
-    background-color: #71eed4;
+    background-color: #77e1ca;
 }
 
 .popup {
@@ -150,6 +223,7 @@ tr:first-child td {
     position: fixed;
     top: 50%;
     left: 50%;
+    max-width: 90%;
     transform: translate(-50%, -50%);
     background-color: white;
     padding: 20px;
@@ -275,17 +349,29 @@ tr:first-child td {
         max-width: 100%;
     }
 
+    .popup {
+        width: 85%;
+    }
+
     .table-ordinary,
     .table-ordinary1,
-    .table-special,
-    .table-window {
+    .table-special {
         width: 350px;
         font-size: 11px;
     }
 
     .table-ordinary td,
     .table-ordinary1 td,
-    .table-special td,
+    .table-special td {
+        width: 100px;
+        font-size: 10px;
+    }
+
+    .table-window {
+        width: 300px;
+        font-size: 11px;
+    }
+
     .table-window td {
         width: 100px;
         font-size: 10px;

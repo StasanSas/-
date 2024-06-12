@@ -13,6 +13,7 @@ info.forEach((image, index) => {
 
     const img = document.createElement('img');
     img.src = image[0];
+    img.alt = image[1];
     img.classList.add('fadeIn');
     container.appendChild(img);
 

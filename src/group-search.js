@@ -1,10 +1,15 @@
+const PREFIXES = ["МЕН", "МЕНМ", "УГИ", "УГИМ", "НМТМ", "Ино"];
 const popup = document.getElementById('popup');
 const overlay = document.createElement('div');
+const groupInput = document.getElementById('groupInput');
+const datalist = document.getElementById('groupsList');
+let tableWindow, auditoriumSVG;
 
 const closePopup = () => {
     popup.style.display = 'none';
     overlay.style.display = 'none';
 };
+
 
 document.addEventListener('DOMContentLoaded', function() {
     overlay.classList.add('overlay');
@@ -28,8 +33,6 @@ document.addEventListener('DOMContentLoaded', function() {
     overlay.addEventListener('click', closePopup);
 });
 
-const groupInput = document.getElementById('groupInput');
-const datalist = document.getElementById('groupsList');
 
 groupInput.addEventListener('input', function() {
     const input = this.value;
@@ -48,8 +51,15 @@ groupInput.addEventListener('keydown', function(event) {
     }
 });
 
+
 function findBestFit() {
     const inputValue = groupInput.value.toLowerCase();
+
+    for (const prefix of PREFIXES) {
+        if (inputValue.startsWith(prefix)) {
+            return;
+        }
+    }
 
     for (let i = 0; i < datalist.options.length; i++) {
         if (datalist.options[i].value.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1) {
@@ -69,10 +79,18 @@ function showAuditorium(auditorium) {
 
     changeFloor();
 
-    globalThis.auditoriumSVG = document.getElementById(auditorium);
-    globalThis.auditoriumSVG.classList.add('flashing-border');
+    auditoriumSVG = document.getElementById(auditorium);
+    auditoriumSVG.classList.add('flashing-border');
 
-    globalThis.auditoriumSVG.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    auditoriumSVG.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+
+function clearTableWindow() {
+    if (tableWindow) {
+        popup.removeChild(tableWindow);
+        tableWindow = undefined;
+    }
 }
 
 
@@ -84,32 +102,29 @@ document.getElementById('apply-button').addEventListener('click', () => {
         return;
     }
 
-    if (globalThis.tableWindow) {
-        popup.removeChild(globalThis.tableWindow);
-        delete globalThis.tableWindow;
-    }
+    clearTableWindow();
 
-    globalThis.tableWindow = document.createElement('table');
-    globalThis.tableWindow.classList.add('table-window');
-    globalThis.tableWindow.style.marginTop = '30px';
+    tableWindow = document.createElement('table');
+    tableWindow.classList.add('table-window');
+    tableWindow.style.marginTop = '30px';
 
-    addClickableRow(globalThis.tableWindow, 'Аудитория', {
+    addClickableRow(tableWindow, 'Аудитория', {
         "lesson": 'Дисциплина',
         "teacherName": 'Преподаватель'
     });
 
     let found = false;
-    Object.entries(globalThis.request).forEach(([auditorium, info]) => {
+    Object.entries(request).forEach(([auditorium, info]) => {
         if (info["groupName"].includes(group)) {
             found = true;
-            addClickableRow(globalThis.tableWindow, auditorium, info);
+            addClickableRow(tableWindow, auditorium, info);
         }
     });
 
     if (!found) {
-        addRow(globalThis.tableWindow, 'У Вашей группы сейчас нет пар!');
+        addRow(tableWindow, 'У Вашей группы сейчас нет пар!');
     } else {
-        globalThis.tableWindow.addEventListener('click', (event) => {
+        tableWindow.addEventListener('click', (event) => {
             if (event.target.parentNode && event.target.parentNode.children[0]) {
                 const auditoriumClicked = event.target.parentNode.children[0].textContent;
                 closePopup();
@@ -118,5 +133,23 @@ document.getElementById('apply-button').addEventListener('click', () => {
         });
     }
 
-    popup.appendChild(globalThis.tableWindow);
+    popup.appendChild(tableWindow);
 });
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const resetButton = document.getElementById('reset-button');
+    const groupInput = document.getElementById('groupInput');
+
+    resetButton.addEventListener('click', function() {
+        groupInput.value = '';
+    });
+});
+
+
+function clearAnimation() {
+    if (auditoriumSVG) {
+        auditoriumSVG.classList.remove('flashing-border');
+        auditoriumSVG = undefined;
+    }
+}

@@ -1,10 +1,13 @@
+const selectFloor = document.getElementById("floor");
+
+
 document.addEventListener('DOMContentLoaded', function () {
-    const select_weekday = document.querySelector('.select-date');
-    const select_pairNumber = document.querySelector('.select-pairNumber');
+    const selectWeekday = document.querySelector('.select-date');
+    const selectPairNumber = document.querySelector('.select-pairNumber');
 
-
-    select_weekday.addEventListener('change', function () {
+    selectWeekday.addEventListener('change', function () {
         clearAnimation();
+        clearTableWindow();
 
         const selectedWeekday = document.querySelector('.select-date').value;
         const selectedPairNumber = document.querySelector('.select-pairNumber').value;
@@ -12,8 +15,9 @@ document.addEventListener('DOMContentLoaded', function () {
         checkAndColorAuditoriums(selectedWeekday, selectedPairNumber);
     });
 
-    select_pairNumber.addEventListener('change', function () {
+    selectPairNumber.addEventListener('change', function () {
         clearAnimation();
+        clearTableWindow();
 
         const selectedWeekday = document.querySelector('.select-date').value;
         const selectedPairNumber = document.querySelector('.select-pairNumber').value;
@@ -22,11 +26,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-const selectFloor = document.getElementById("floor");
-
 
 function changeFloor() {
     clearAnimation();
+    clearTableWindow();
 
     const selectedMap = selectFloor.value;
     const elementsMap = document.querySelectorAll(".scheme");
@@ -43,9 +46,18 @@ function changeFloor() {
 
 selectFloor.addEventListener("change", changeFloor);
 
-function clearAnimation() {
-    if (globalThis.auditoriumSVG) {
-        globalThis.auditoriumSVG.classList.remove('flashing-border');
-        delete globalThis.auditoriumSVG;
-    }
-}
+
+document.addEventListener('DOMContentLoaded', function() {
+    let today = new Date(2024, 4, 28);
+    document.getElementById('date').valueAsDate = today;
+
+    let endDate = new Date(today);
+    endDate.setDate(endDate.getDate() + 6);
+
+    let year = endDate.getFullYear();
+    let month = endDate.getMonth() + 1 >= 10 ? endDate.getMonth() + 1 : '0' + (endDate.getMonth() + 1);
+    let day = endDate.getDate() >= 10 ? endDate.getDate() : '0' + endDate.getDate();
+
+    document.getElementById('date').min = today.toISOString().slice(0, 10);
+    document.getElementById('date').max = year + '-' + month + '-' + day;
+});

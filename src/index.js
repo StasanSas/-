@@ -1,35 +1,44 @@
-const SPECIAL = new Set([
-    "515а", "501", "512", "520", "522", "524а", "524", "530", "534", "538", "540",
-    "631", "617", "615", "613", "609", "607", "618", "620", "624", "626", "630", "632а", "634", "636", "638", "640"
-]);
-
-
 const date = new Date(2024, 4, 27);
-const day = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
-const number = ConvertToPeriod(date.getHours(), date.getMinutes())
+date.setHours(9, 0, 0, 0);
+const day = getHyphenatedDate(date);
+const number = ConvertToPeriod(date.getHours(), date.getMinutes());
 checkAndColorAuditoriums(day, number);
 document.querySelector(`#pairNumber option[value=\'${number}\']`).selected = true;
 
-document.addEventListener('DOMContentLoaded', function() {
-    let today = new Date(2024, 4, 28);
-    document.getElementById('date').valueAsDate = today;
 
-    let endDate = new Date(today);
-    endDate.setDate(endDate.getDate() + 6);
+document.getElementById("621").scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-    let year = endDate.getFullYear();
-    let month = endDate.getMonth() + 1 >= 10 ? endDate.getMonth() + 1 : '0' + (endDate.getMonth() + 1);
-    let day = endDate.getDate() >= 10 ? endDate.getDate() : '0' + endDate.getDate();
 
-    document.getElementById('date').min = today.toISOString().slice(0, 10);
-    document.getElementById('date').max = year + '-' + month + '-' + day;
-});
+function ConvertToPeriod(currentHour, currentMinute) {
+    switch (true) {
+        case (currentHour === 9) || (currentHour === 10 && currentMinute <= 29):
+            return 1;
+        case (currentHour === 10) || (currentHour === 11) || (currentHour === 12 && currentMinute <= 9):
+            return 2;
+        case (currentHour === 12) || (currentHour === 13) || (currentHour === 14 && currentMinute <= 19):
+            return 3;
+        case (currentHour === 14) || (currentHour === 15):
+            return 4;
+        case (currentHour === 16) || (currentHour === 17 && currentMinute <= 39):
+            return 5;
+        case (currentHour === 17) || (currentHour === 18) || (currentHour === 19 && currentMinute <= 19):
+            return 6;
+        case (currentHour === 19) || (currentHour === 20):
+            return 7;
+        default:
+            return 7;
+    }
+}
 
-$(document).ready(function () {
-    window.timerId = setInterval(checkAndColorAuditoriums, 60000);
-});
 
-window.addEventListener('scroll', updateTables);
+function getHyphenatedDate(date) {
+    return `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
+}
+
+
+
+
+
 
 
 
